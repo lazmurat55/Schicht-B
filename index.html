@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schicht B - Produktionsbericht</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #25D366;
-            --primary-dark: #128C7E;
-            --secondary: #34b7f1;
-            --bg: #f8fafc;
+            --primary: #1a2a5e; /* Adler Pelzer Kurumsal Lacivert */
+            --wa-green: #25D366;
+            --bg: #f1f5f9;
             --card: #ffffff;
             --text: #1e293b;
             --border: #cbd5e1;
@@ -32,18 +31,33 @@
             background: var(--card);
             padding: 25px;
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo-container img {
+            width: 220px; /* Logo boyutu */
+            height: auto;
         }
 
         h2 {
             text-align: center;
             margin-top: 0;
-            color: #000;
-            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--primary);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
         }
 
         .section-label {
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             font-weight: 700;
             color: #64748b;
@@ -72,7 +86,7 @@
 
         input:focus, select:focus {
             outline: none;
-            border-color: var(--secondary);
+            border-color: var(--primary);
         }
 
         .grid {
@@ -94,33 +108,34 @@
             border: none;
             border-radius: 10px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: opacity 0.2s;
+            transition: all 0.2s ease;
         }
 
         .btn-wa {
-            background-color: var(--primary);
+            background-color: var(--wa-green);
             color: white;
         }
 
         .btn-img {
             background-color: #fff;
-            color: var(--secondary);
-            border: 2px solid var(--secondary);
+            color: var(--primary);
+            border: 2px solid var(--primary);
         }
 
         button:active {
-            opacity: 0.7;
+            transform: scale(0.98);
+            opacity: 0.8;
         }
 
         #customName {
             display: none;
-            border-color: var(--secondary);
+            border-color: var(--primary);
             background: #f0f9ff;
         }
     </style>
@@ -128,7 +143,12 @@
 <body>
 
 <div class="container">
-    <h2>Schicht B</h2>
+    <!-- LOGO BURADA -->
+    <div class="logo-container">
+        <img src="adler-1.svg" alt="Adler Pelzer Group Logo">
+    </div>
+    
+    <h2>Schicht-B</h2>
 
     <div class="section-label">Personal & Anlage</div>
     
@@ -247,7 +267,8 @@
         var stM = document.getElementById("stoerungMin").value || 0;
         var nt = document.getElementById("notiz").value || "-";
 
-        var text = "*SCHICHT B BERICHT*\n\n" +
+        var text = "*APG - SCHICHT B BERICHT*\n" +
+                   "--------------------------\n" +
                    "*Mitarbeiter:* " + worker + "\n" +
                    "*Anlage:* " + anlage + "\n\n" +
                    "*Artikel 1:* " + art1 + "\n" +
@@ -264,7 +285,6 @@
         window.open("https://wa.me/?text=" + encodeURIComponent(text));
     }
 
-    // Foto butonu basıldığında uyarı
     document.getElementById('cameraInput').onchange = function() {
         alert("Fotoğraf seçildi. Şimdi WhatsApp'ı açıp fotoğrafı ekleyebilirsiniz.");
     };
