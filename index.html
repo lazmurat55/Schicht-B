@@ -13,8 +13,8 @@ body {
 }
 
 .container {
-  max-width: 600px;
-  margin: 40px auto;
+  max-width: 650px;
+  margin: 30px auto;
   background: white;
   padding: 25px;
   border-radius: 12px;
@@ -28,6 +28,8 @@ h2 {
 
 label {
   font-weight: bold;
+  margin-top: 10px;
+  display: block;
 }
 
 input, select, textarea {
@@ -55,7 +57,6 @@ button {
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 button:hover {
@@ -104,16 +105,44 @@ button:hover {
 
 <input type="text" id="customName" placeholder="Name eingeben" style="display:none;">
 
-<div class="grid">
-  <input type="text" id="anlage" placeholder="Anlage">
-  <input type="text" id="artikel" placeholder="Artikelnummer">
-</div>
+<!-- ANLAGE DROPDOWN -->
+<label>Anlage</label>
+<select id="anlage">
+  <option value="">-- auswählen --</option>
+  <option>PUR1</option>
+  <option>PUR2</option>
+  <option>PUR3</option>
+  <option>PUR4</option>
+  <option>PUR5</option>
+  <option>PUR6</option>
+  <option>PUR7</option>
+  <option>PUR8</option>
+  <option>PUR9</option>
+  <option>CIM1</option>
+  <option>IM1</option>
+  <option>IM2</option>
+  <option>IM3</option>
+  <option>IM4</option>
+  <option>IM5</option>
+</select>
 
+<!-- ARTIKEL 1 -->
+<label>Artikel 1</label>
 <div class="grid">
-  <input type="number" id="gutteile" placeholder="Gutteile">
-  <input type="number" id="ausschuss" placeholder="Ausschuss">
+  <input type="text" id="artikel1" placeholder="Artikelnummer">
+  <input type="number" id="gut1" placeholder="Gutteile">
 </div>
+<input type="number" id="aus1" placeholder="Ausschuss">
 
+<!-- ARTIKEL 2 -->
+<label>Artikel 2 (optional)</label>
+<div class="grid">
+  <input type="text" id="artikel2" placeholder="Artikelnummer">
+  <input type="number" id="gut2" placeholder="Gutteile">
+</div>
+<input type="number" id="aus2" placeholder="Ausschuss">
+
+<!-- STÖRUNG -->
 <div class="grid">
   <input type="text" id="stoerung" placeholder="Störung">
   <input type="number" id="stoerungMin" placeholder="Minuten">
@@ -126,14 +155,15 @@ button:hover {
 </div>
 
 <script>
+
 function checkWorker() {
   const worker = document.getElementById("worker").value;
   const custom = document.getElementById("customName");
-
   custom.style.display = worker === "other" ? "block" : "none";
 }
 
 function sendWhatsApp() {
+
   let worker = document.getElementById("worker").value;
   const custom = document.getElementById("customName").value;
 
@@ -142,26 +172,46 @@ function sendWhatsApp() {
   }
 
   const anlage = document.getElementById("anlage").value;
-  const artikel = document.getElementById("artikel").value;
-  const gutteile = document.getElementById("gutteile").value;
-  const ausschuss = document.getElementById("ausschuss").value;
+
+  const artikel1 = document.getElementById("artikel1").value;
+  const gut1 = document.getElementById("gut1").value;
+  const aus1 = document.getElementById("aus1").value;
+
+  const artikel2 = document.getElementById("artikel2").value;
+  const gut2 = document.getElementById("gut2").value;
+  const aus2 = document.getElementById("aus2").value;
+
   const stoerung = document.getElementById("stoerung").value;
   const stoerungMin = document.getElementById("stoerungMin").value;
   const notiz = document.getElementById("notiz").value;
+
+  let artikelText =
+`Artikel 1: ${artikel1}
+Gutteile: ${gut1}
+Ausschuss: ${aus1}`;
+
+  if (artikel2) {
+    artikelText += `
+
+Artikel 2: ${artikel2}
+Gutteile: ${gut2}
+Ausschuss: ${aus2}`;
+  }
 
   const text =
 `Schicht B
 Mitarbeiter: ${worker}
 Anlage: ${anlage}
-Artikel: ${artikel}
-Gutteile: ${gutteile}
-Ausschuss: ${ausschuss}
+
+${artikelText}
+
 Störung: ${stoerung} (${stoerungMin} min)
 Not: ${notiz}`;
 
   const url = "https://wa.me/?text=" + encodeURIComponent(text);
   window.location.href = url;
 }
+
 </script>
 
 </body>
