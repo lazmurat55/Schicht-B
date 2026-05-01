@@ -3,195 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produktionsbericht - Schicht B</title>
+    <title>Schicht B - Produktionsbericht</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
     <style>
         :root {
-            --primary-color: #25D366;
-            --primary-hover: #128C7E;
-            --secondary-color: #34b7f1;
-            --bg-color: #f4f7f9;
-            --text-color: #334155;
-            --border-color: #e2e8f0;
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #34b7f1;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --border: #cbd5e1;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg);
+            color: var(--text);
             margin: 0;
-            padding: 20px;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
         }
 
         .container {
-            max-width: 550px;
-            margin: 20px auto;
-            background: white;
-            padding: 32px;
+            width: 100%;
+            max-width: 500px;
+            background: var(--card);
+            padding: 25px;
             border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
-        .header {
+        h2 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-top: 0;
+            color: #000;
+            font-weight: 700;
         }
 
-        .header h2 {
-            margin: 0;
-            font-weight: 600;
-            color: #1e293b;
-            letter-spacing: -0.5px;
-        }
-
-        .header p {
+        .section-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
             color: #64748b;
-            font-size: 14px;
-            margin-top: 5px;
+            margin: 20px 0 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
         }
-
-        section {
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        section:last-of-type { border-bottom: none; }
 
         label {
-            font-weight: 500;
-            font-size: 14px;
-            margin-bottom: 8px;
             display: block;
-            color: #475569;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 14px;
         }
 
-        input, select, textarea {
+        select, input, textarea {
             width: 100%;
             padding: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 15px;
+            border: 1.5px solid var(--border);
             border-radius: 8px;
-            border: 1px solid var(--border-color);
             font-size: 15px;
             box-sizing: border-box;
-            transition: all 0.2s;
-            background-color: #f8fafc;
+            background: #fff;
         }
 
-        input:focus, select:focus, textarea:focus {
+        input:focus, select:focus {
             outline: none;
-            border-color: var(--primary-color);
-            background-color: #fff;
-            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+            border-color: var(--secondary);
         }
 
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .section-title {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #94a3b8;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .button-group {
+        .btn-group {
+            margin-top: 10px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 10px;
         }
 
         button {
             width: 100%;
-            padding: 14px;
+            padding: 15px;
             border: none;
             border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            transition: opacity 0.2s;
         }
 
-        .btn-whatsapp {
-            background: var(--primary-color);
+        .btn-wa {
+            background-color: var(--primary);
             color: white;
         }
 
-        .btn-whatsapp:hover {
-            background: var(--primary-hover);
-        }
-
-        .btn-photo {
-            background: #fff;
-            color: var(--secondary-color);
-            border: 2px solid var(--secondary-color);
-        }
-
-        .btn-photo:hover {
-            background: #f0f9ff;
+        .btn-img {
+            background-color: #fff;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
         }
 
         button:active {
-            transform: scale(0.98);
+            opacity: 0.7;
         }
 
-        #fileInput {
+        #customName {
             display: none;
-        }
-
-        .photo-hint {
-            font-size: 12px;
-            color: #64748b;
-            text-align: center;
-            margin-top: 5px;
+            border-color: var(--secondary);
+            background: #f0f9ff;
         }
     </style>
 </head>
-
 <body>
 
 <div class="container">
-    <div class="header">
-        <h2>Schicht B Protokoll</h2>
-        <p>Produktionsdaten und Fotos übermitteln</p>
+    <h2>Schicht B</h2>
+
+    <div class="section-label">Personal & Anlage</div>
+    
+    <label>Mitarbeiter</label>
+    <select id="worker" onchange="checkWorker()">
+        <option value="">-- Bitte wählen --</option>
+        <option>Aldirmaz P. - 577</option>
+        <option>Anderwald R. - 509 E</option>
+        <option>Bayrakli F. - 1377 E</option>
+        <option>Kilic D. - 1384 E</option>
+        <option>Maafi T. - 1273 E</option>
+        <option>Besche T. - 1472</option>
+        <option>Eickhoff P. - 1406</option>
+        <option>Toth, Renata - 1699</option>
+        <option>Gibba N. - 1367</option>
+        <option>Helf A. - 1483</option>
+        <option>Isbir J. - 1715</option>
+        <option>Jeyakumar S. - 1698</option>
+        <option>Kalisch T. - 1451</option>
+        <option>Keskin Mur. - 517</option>
+        <option>Kowarsch R. - 484</option>
+        <option>Nowak M. - 1390</option>
+        <option>Pähler D. - 1332</option>
+        <option>Patarcsity V. - 1700</option>
+        <option>Pulendran K. - 1498</option>
+        <option>Sahin E. - 1721</option>
+        <option>Savas S. - 1360</option>
+        <option>Schiavitelli C. - 1669</option>
+        <option>Uluyüz B. - 1450</option>
+        <option>Uzun S. - 1433</option>
+        <option>Klomrit, Thanin - 1070</option>
+        <option>Garcia-Hervas, Francisco - 339</option>
+        <option value="other">Andere...</option>
+    </select>
+    <input type="text" id="customName" placeholder="Name hier eingeben">
+
+    <label>Anlage</label>
+    <select id="anlage">
+        <option value="">-- Bitte wählen --</option>
+        <option>PUR1</option><option>PUR2</option><option>PUR3</option>
+        <option>PUR4</option><option>PUR5</option><option>PUR6</option>
+        <option>PUR7</option><option>PUR8</option><option>PUR9</option>
+        <option>CIM1</option><option>IM1</option><option>IM2</option>
+        <option>IM3</option><option>IM4</option><option>IM5</option>
+    </select>
+
+    <div class="section-label">Produktion</div>
+    
+    <label>Artikel 1</label>
+    <input type="text" id="artikel1" placeholder="Artikelnummer">
+    <div class="grid">
+        <input type="number" id="gut1" placeholder="Gutteile">
+        <input type="number" id="aus1" placeholder="Ausschuss">
     </div>
 
-    <section>
-        <div class="section-title">Allgemeine Infos</div>
-        <label>Mitarbeiter</label>
-        <select id="worker" onchange="checkWorker()">
-            <option value="">-- Name auswählen --</option>
-            <option>Aldirmaz P. - 577</option>
-            <option>Anderwald R. - 509 E</option>
-            <option>Bayrakli F. - 1377 E</option>
-            <option>Kilic D. - 1384 E</option>
-            <option>Maafi T. - 1273 E</option>
-            <option>Besche T. - 1472</option>
-            <option>Eickhoff P. - 1406</option>
-            <option>Toth, Renata - 1699</option>
-            <option>Gibba N. - 1367</option>
-            <option>Helf A. - 1483</option>
-            <option>Isbir J. - 1715</option>
-            <option>Jeyakumar S. - 1698</option>
-            <option>Kalisch T. - 1451</option>
-            <option>Keskin Mur. - 517</option>
-            <option>Kowarsch R. - 484</option>
-            <option>Nowak M. - 1390</option>
-            <option>Pähler D. - 1332</option>
-            <option>Patarcsity V. - 1700</option>
-            <option>Pulendran K. - 1498</option>
-            <option>Sahin E. - 1721</option>
-            <option>Savas S. - 1360</option>
-            <option>Schiavitelli C. - 1669</option>
-            <option>Uluyüz B. - 1450</
+    <label>Artikel 2 (Optional)</label>
+    <input type="text" id="artikel2" placeholder="Artikelnummer">
+    <div class="grid">
+        <input type="number" id="gut2" placeholder="Gutteile">
+        <input type="number" id="aus2" placeholder="Ausschuss">
+    </div>
+
+    <div class="section-label">Störungen & Info</div>
+    
+    <div class="grid">
+        <input type="text" id="stoerung" placeholder="Störung">
+        <input type="number" id="stoerungMin" placeholder="Minuten">
+    </div>
+    <textarea id="notiz" rows="2" placeholder="Notizen..."></textarea>
+
+    <div class="btn-group">
+        <button class="btn-wa" onclick="sendWhatsApp()">
+            WhatsApp senden
+        </button>
+        
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
+        <button class="btn-img" onclick="document.getElementById('cameraInput').click()">
+            Foto aufnehmen / senden
+        </button>
+    </div>
+</div>
+
+<script>
+    function checkWorker() {
+        var selection = document.getElementById("worker").value;
+        var customInput = document.getElementById("customName");
+        if (selection === "other") {
+            customInput.style.display = "block";
+        } else {
+            customInput.style.display = "none";
+        }
+    }
+
+    function sendWhatsApp() {
+        var worker = document.getElementById("worker").value;
+        if (worker === "other") {
+            worker = document.getElementById("customName").value;
+        }
+        
+        var anlage = document.getElementById("anlage").value;
+        
+        if (!worker || !anlage) {
+            alert("Bitte Mitarbeiter und Anlage auswählen!");
+            return;
+        }
+
+        var art1 = document.getElementById("artikel1").value;
+        var gut1 = document.getElementById("gut1").value || 0;
+        var aus1 = document.getElementById("aus1").value || 0;
+
+        var art2 = document.getElementById("artikel2").value;
+        var gut2 = document.getElementById("gut2").value || 0;
+        var aus2 = document.getElementById("aus2").value || 0;
+
+        var st = document.getElementById("stoerung").value || "Keine";
+        var stM = document.getElementById("stoerungMin").value || 0;
+        var nt = document.getElementById("notiz").value || "-";
+
+        var text = "*SCHICHT B BERICHT*\n\n" +
+                   "*Mitarbeiter:* " + worker + "\n" +
+                   "*Anlage:* " + anlage + "\n\n" +
+                   "*Artikel 1:* " + art1 + "\n" +
+                   "Gut: " + gut1 + " | Aus: " + aus1 + "\n";
+
+        if (art2) {
+            text += "\n*Artikel 2:* " + art2 + "\n" +
+                    "Gut: " + gut2 + " | Aus: " + aus2 + "\n";
+        }
+
+        text += "\n*Störung:* " + st + " (" + stM + " min)\n" +
+                "*Notiz:* " + nt;
+
+        window.open("https://wa.me/?text=" + encodeURIComponent(text));
+    }
+
+    // Foto butonu basıldığında uyarı
+    document.getElementById('cameraInput').onchange = function() {
+        alert("Fotoğraf seçildi. Şimdi WhatsApp'ı açıp fotoğrafı ekleyebilirsiniz.");
+    };
+</script>
+
+</body>
+</html>
