@@ -7,7 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a2a5e; /* Adler Pelzer Kurumsal Mavi */
+            --alacati-mavi: #78a2cc; /* Alacatı Mavisi Tonu */
+            --apg-dark: #1a2a5e;    /* Koyu lacivert (detaylar için) */
             --wa-green: #25D366;
             --bg: #f1f5f9;
             --card: #ffffff;
@@ -34,31 +35,31 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        /* YENI TASARIM: KALIN VE MAVI YAZI */
         .company-header {
             text-align: center;
             margin-bottom: 5px;
         }
 
         .company-name {
-            color: var(--primary);
+            color: var(--alacati-mavi); /* Alacatı Mavisi Uygulandı */
             font-size: 28px;
-            font-weight: 900; /* Çok Kalın */
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -0.5px;
             margin: 0;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.05); /* Hafif derinlik */
         }
 
         h2 {
             text-align: center;
             margin-top: 0;
             margin-bottom: 25px;
-            color: var(--primary);
+            color: var(--apg-dark);
             font-weight: 600;
             font-size: 18px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            opacity: 0.8;
+            opacity: 0.7;
         }
 
         .section-label {
@@ -91,7 +92,7 @@
 
         input:focus, select:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--alacati-mavi);
         }
 
         .grid {
@@ -129,32 +130,26 @@
 
         .btn-img {
             background-color: #fff;
-            color: var(--primary);
-            border: 2px solid var(--primary);
+            color: var(--apg-dark);
+            border: 2px solid var(--apg-dark);
         }
 
         button:active {
             transform: scale(0.98);
             opacity: 0.8;
         }
-
-        #customName {
-            display: none;
-            border-color: var(--primary);
-            background: #f0f9ff;
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- LOGO YERINE YAZI GELDI -->
     <div class="company-header">
         <p class="company-name">ADLER PELZER GROUP</p>
     </div>
     
     <h2>Schicht-B</h2>
 
+    <!-- Formun geri kalanı aynı şekilde devam ediyor... -->
     <div class="section-label">Personal & Anlage</div>
     
     <label>Mitarbeiter</label>
@@ -188,7 +183,7 @@
         <option>Garcia-Hervas, Francisco - 339</option>
         <option value="other">Andere...</option>
     </select>
-    <input type="text" id="customName" placeholder="Name hier eingeben">
+    <input type="text" id="customName" style="display:none;" placeholder="Name hier eingeben">
 
     <label>Anlage</label>
     <select id="anlage">
@@ -209,13 +204,6 @@
         <input type="number" id="aus1" placeholder="Ausschuss">
     </div>
 
-    <label>Artikel 2 (Optional)</label>
-    <input type="text" id="artikel2" placeholder="Artikelnummer">
-    <div class="grid">
-        <input type="number" id="gut2" placeholder="Gutteile">
-        <input type="number" id="aus2" placeholder="Ausschuss">
-    </div>
-
     <div class="section-label">Störungen & Info</div>
     
     <div class="grid">
@@ -228,10 +216,9 @@
         <button class="btn-wa" onclick="sendWhatsApp()">
             WhatsApp senden
         </button>
-        
         <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
         <button class="btn-img" onclick="document.getElementById('cameraInput').click()">
-            Foto aufnehmen / senden
+            Foto aufnehmen
         </button>
     </div>
 </div>
@@ -240,60 +227,30 @@
     function checkWorker() {
         var selection = document.getElementById("worker").value;
         var customInput = document.getElementById("customName");
-        if (selection === "other") {
-            customInput.style.display = "block";
-        } else {
-            customInput.style.display = "none";
-        }
+        customInput.style.display = (selection === "other") ? "block" : "none";
     }
 
     function sendWhatsApp() {
         var worker = document.getElementById("worker").value;
-        if (worker === "other") {
-            worker = document.getElementById("customName").value;
-        }
-        
+        if (worker === "other") worker = document.getElementById("customName").value;
         var anlage = document.getElementById("anlage").value;
         
         if (!worker || !anlage) {
-            alert("Bitte Mitarbeiter und Anlage auswählen!");
+            alert("Mitarbeiter und Anlage fehlen!");
             return;
         }
-
-        var art1 = document.getElementById("artikel1").value;
-        var gut1 = document.getElementById("gut1").value || 0;
-        var aus1 = document.getElementById("aus1").value || 0;
-
-        var art2 = document.getElementById("artikel2").value;
-        var gut2 = document.getElementById("gut2").value || 0;
-        var aus2 = document.getElementById("aus2").value || 0;
-
-        var st = document.getElementById("stoerung").value || "Keine";
-        var stM = document.getElementById("stoerungMin").value || 0;
-        var nt = document.getElementById("notiz").value || "-";
 
         var text = "*APG - SCHICHT B BERICHT*\n" +
                    "--------------------------\n" +
                    "*Mitarbeiter:* " + worker + "\n" +
-                   "*Anlage:* " + anlage + "\n\n" +
-                   "*Artikel 1:* " + art1 + "\n" +
-                   "Gut: " + gut1 + " | Aus: " + aus1 + "\n";
-
-        if (art2) {
-            text += "\n*Artikel 2:* " + art2 + "\n" +
-                    "Gut: " + gut2 + " | Aus: " + aus2 + "\n";
-        }
-
-        text += "\n*Störung:* " + st + " (" + stM + " min)\n" +
-                "*Notiz:* " + nt;
+                   "*Anlage:* " + anlage + "\n" +
+                   "*Artikel:* " + document.getElementById("artikel1").value + "\n" +
+                   "*Gut:* " + (document.getElementById("gut1").value || 0) + "\n" +
+                   "*Fire:* " + (document.getElementById("aus1").value || 0) + "\n" +
+                   "*Störung:* " + (document.getElementById("stoerung").value || "Keine") + " (" + (document.getElementById("stoerungMin").value || 0) + " min)";
 
         window.open("https://wa.me/?text=" + encodeURIComponent(text));
     }
-
-    document.getElementById('cameraInput').onchange = function() {
-        alert("Fotoğraf seçildi. Şimdi WhatsApp'ı açıp fotoğrafı ekleyebilirsiniz.");
-    };
 </script>
-
 </body>
 </html>
