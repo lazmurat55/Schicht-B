@@ -4,44 +4,67 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Schicht B</title>
+
 <style>
-body {font-family: Arial; padding:20px; background:#f5f5f5;}
-input, select, textarea, button {width:100%; padding:10px; margin-top:10px;}
-button {background:#25D366; color:white; border:none;}
+body { font-family: Arial; padding:20px; background:#f5f5f5; }
+input, select { margin:5px 0; padding:10px; width:100%; font-size:16px; }
+button { padding:12px; width:100%; background:#25D366; color:white; border:none; font-size:16px; }
 </style>
 </head>
+
 <body>
 
-<h2>Schicht B Eingabe</h2>
+<h2>Schicht B Formular</h2>
 
-<input type="text" id="worker" placeholder="Mitarbeiter Name">
+<input id="name" placeholder="Mitarbeiter Name">
 
-<input type="text" id="anlage" placeholder="Anlage">
-<input type="text" id="artikel" placeholder="Artikelnummer">
-<input type="number" id="gutteile" placeholder="Gutteile">
-<input type="number" id="ausschuss" placeholder="Ausschuss">
+<select id="anlage">
+<option>PUR1</option>
+<option>PUR2</option>
+<option>PUR3</option>
+<option>PUR4</option>
+<option>PUR5</option>
+<option>IM1</option>
+<option>IM2</option>
+<option>CIM1</option>
+</select>
 
-<input type="text" id="stoerung" placeholder="Störung">
-<input type="number" id="dauer" placeholder="Minuten">
+<input id="artikel" placeholder="Artikelnummer">
+<input id="gut" type="number" placeholder="Gutteile">
+<input id="ausschuss" type="number" placeholder="Ausschuss">
+<input id="storung" placeholder="Störung">
 
-<textarea id="notiz" placeholder="Not"></textarea>
-
-<button onclick="sendWhatsApp()">WhatsApp senden</button>
+<button onclick="gonderWhatsApp()">WhatsApp senden</button>
 
 <script>
-function sendWhatsApp(){
+function gonderWhatsApp() {
 
-const text =
-`MITARBEITER: ${worker.value}
-ANLAGE: ${anlage.value}
-ARTIKEL: ${artikel.value}
-GUT: ${gutteile.value}
-AUSSCHUSS: ${ausschuss.value}
-STOERUNG: ${stoerung.value}
-DAUER: ${dauer.value}
-NOT: ${notiz.value}`;
+let name = document.getElementById("name").value;
+let anlage = document.getElementById("anlage").value;
+let artikel = document.getElementById("artikel").value;
+let gut = document.getElementById("gut").value;
+let ausschuss = document.getElementById("ausschuss").value;
+let storung = document.getElementById("storung").value;
 
-const url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(text);
+if (!name || !gut) {
+    alert("Bitte Name und Gutteile eingeben!");
+    return;
+}
+
+let now = new Date();
+let tarih = now.toLocaleDateString();
+let saat = now.toLocaleTimeString();
+
+let mesaj = `MITARBEITER: ${name}
+ANLAGE: ${anlage}
+ARTIKEL: ${artikel}
+GUT: ${gut}
+AUSSCHUSS: ${ausschuss}
+STOERUNG: ${storung}
+DATUM: ${tarih} ${saat}`;
+
+// 🔥 iPhone + GitHub uyumlu
+let url = "https://api.whatsapp.com/send?phone=4917623638794&text=" + encodeURIComponent(mesaj);
 
 window.open(url, "_blank");
 }
