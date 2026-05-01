@@ -6,67 +6,161 @@
 <title>Schicht B</title>
 
 <style>
-body { font-family: Arial; padding:20px; background:#f5f5f5; }
-input, select { margin:5px 0; padding:10px; width:100%; font-size:16px; }
-button { padding:12px; width:100%; background:#25D366; color:white; border:none; font-size:16px; }
+body {
+  font-family: Arial, sans-serif;
+  background: #eef1f5;
+  margin: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #25D366;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #1ebe5d;
+}
 </style>
 </head>
 
 <body>
 
-<h2>Schicht B Formular</h2>
+<div class="container">
 
-<input id="name" placeholder="Mitarbeiter Name">
+<h2>Schicht B Eingabe</h2>
 
-<select id="anlage">
-<option>PUR1</option>
-<option>PUR2</option>
-<option>PUR3</option>
-<option>PUR4</option>
-<option>PUR5</option>
-<option>IM1</option>
-<option>IM2</option>
-<option>CIM1</option>
+<label>Mitarbeiter:</label>
+<select id="worker" onchange="checkWorker()">
+  <option value="">-- auswählen --</option>
+  <option>Aldirmaz P. - 577</option>
+  <option>Anderwald R. - 509 E</option>
+  <option>Bayrakli F. - 1377 E</option>
+  <option>Kilic D. - 1384 E</option>
+  <option>Maafi T. - 1273 E</option>
+  <option>Besche T. - 1472</option>
+  <option>Eickhoff P. - 1406</option>
+  <option>Toth, Renata - 1699</option>
+  <option>Gibba N. - 1367</option>
+  <option>Helf A. - 1483</option>
+  <option>Isbir J. - 1715</option>
+  <option>Jeyakumar S. - 1698</option>
+  <option>Kalisch T. - 1451</option>
+  <option>Keskin Mur. - 517</option>
+  <option>Kowarsch R. - 484</option>
+  <option>Nowak M. - 1390</option>
+  <option>Pähler D. - 1332</option>
+  <option>Patarcsity V. - 1700</option>
+  <option>Pulendran K. - 1498</option>
+  <option>Sahin E. - 1721</option>
+  <option>Savas S. - 1360</option>
+  <option>Schiavitelli C. - 1669</option>
+  <option>Uluyüz B. - 1450</option>
+  <option>Uzun S. - 1433</option>
+  <option>Klomrit, Thanin - 1070</option>
+  <option>Garcia-Hervas, Francisco - 339</option>
+  <option value="other">Andere...</option>
 </select>
 
-<input id="artikel" placeholder="Artikelnummer">
-<input id="gut" type="number" placeholder="Gutteile">
-<input id="ausschuss" type="number" placeholder="Ausschuss">
-<input id="storung" placeholder="Störung">
+<input type="text" id="customName" placeholder="Name eingeben" style="display:none;">
 
-<button onclick="gonderWhatsApp()">WhatsApp senden</button>
+<div class="grid">
+  <input type="text" id="anlage" placeholder="Anlage">
+  <input type="text" id="artikel" placeholder="Artikelnummer">
+</div>
+
+<div class="grid">
+  <input type="number" id="gutteile" placeholder="Gutteile">
+  <input type="number" id="ausschuss" placeholder="Ausschuss">
+</div>
+
+<div class="grid">
+  <input type="text" id="stoerung" placeholder="Störung">
+  <input type="number" id="stoerungMin" placeholder="Minuten">
+</div>
+
+<textarea id="notiz" placeholder="Not / Zusatzinfo"></textarea>
+
+<button onclick="sendWhatsApp()">WhatsApp senden</button>
+
+</div>
 
 <script>
-function gonderWhatsApp() {
+function checkWorker() {
+  const worker = document.getElementById("worker").value;
+  const custom = document.getElementById("customName");
 
-let name = document.getElementById("name").value;
-let anlage = document.getElementById("anlage").value;
-let artikel = document.getElementById("artikel").value;
-let gut = document.getElementById("gut").value;
-let ausschuss = document.getElementById("ausschuss").value;
-let storung = document.getElementById("storung").value;
-
-if (!name || !gut) {
-    alert("Bitte Name und Gutteile eingeben!");
-    return;
+  custom.style.display = worker === "other" ? "block" : "none";
 }
 
-let now = new Date();
-let tarih = now.toLocaleDateString();
-let saat = now.toLocaleTimeString();
+function sendWhatsApp() {
+  let worker = document.getElementById("worker").value;
+  const custom = document.getElementById("customName").value;
 
-let mesaj = `MITARBEITER: ${name}
-ANLAGE: ${anlage}
-ARTIKEL: ${artikel}
-GUT: ${gut}
-AUSSCHUSS: ${ausschuss}
-STOERUNG: ${storung}
-DATUM: ${tarih} ${saat}`;
+  if (worker === "other") {
+    worker = custom;
+  }
 
-// 🔥 iPhone + GitHub uyumlu
-let url = "https://api.whatsapp.com/send?phone=4917623638794&text=" + encodeURIComponent(mesaj);
+  const anlage = document.getElementById("anlage").value;
+  const artikel = document.getElementById("artikel").value;
+  const gutteile = document.getElementById("gutteile").value;
+  const ausschuss = document.getElementById("ausschuss").value;
+  const stoerung = document.getElementById("stoerung").value;
+  const stoerungMin = document.getElementById("stoerungMin").value;
+  const notiz = document.getElementById("notiz").value;
 
-window.open(url, "_blank");
+  const text =
+`Schicht B
+Mitarbeiter: ${worker}
+Anlage: ${anlage}
+Artikel: ${artikel}
+Gutteile: ${gutteile}
+Ausschuss: ${ausschuss}
+Störung: ${stoerung} (${stoerungMin} min)
+Not: ${notiz}`;
+
+  const url = "https://wa.me/?text=" + encodeURIComponent(text);
+  window.location.href = url;
 }
 </script>
 
