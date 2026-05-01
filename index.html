@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schicht B - Produktionsbericht</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a2a5e; /* Adler Pelzer Kurumsal Lacivert */
+            --primary: #1a2a5e; /* Adler Pelzer Kurumsal Mavi */
             --wa-green: #25D366;
             --bg: #f1f5f9;
             --card: #ffffff;
@@ -34,14 +34,19 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        .logo-container {
+        /* YENI TASARIM: KALIN VE MAVI YAZI */
+        .company-header {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
-        .logo-container img {
-            width: 220px; /* Logo boyutu */
-            height: auto;
+        .company-name {
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: 900; /* Çok Kalın */
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            margin: 0;
         }
 
         h2 {
@@ -49,11 +54,11 @@
             margin-top: 0;
             margin-bottom: 25px;
             color: var(--primary);
-            font-weight: 800;
+            font-weight: 600;
+            font-size: 18px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 10px;
+            letter-spacing: 2px;
+            opacity: 0.8;
         }
 
         .section-label {
@@ -143,9 +148,9 @@
 <body>
 
 <div class="container">
-    <!-- LOGO BURADA -->
-    <div class="logo-container">
-        <img src="adler-1.svg" alt="Adler Pelzer Group Logo">
+    <!-- LOGO YERINE YAZI GELDI -->
+    <div class="company-header">
+        <p class="company-name">ADLER PELZER GROUP</p>
     </div>
     
     <h2>Schicht-B</h2>
