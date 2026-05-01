@@ -1,218 +1,197 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Schicht B</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produktionsbericht - Schicht B</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #25D366;
+            --primary-hover: #128C7E;
+            --secondary-color: #34b7f1;
+            --bg-color: #f4f7f9;
+            --text-color: #334155;
+            --border-color: #e2e8f0;
+        }
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #eef1f5;
-  margin: 0;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
 
-.container {
-  max-width: 650px;
-  margin: 30px auto;
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
+        .container {
+            max-width: 550px;
+            margin: 20px auto;
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
 
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-label {
-  font-weight: bold;
-  margin-top: 10px;
-  display: block;
-}
+        .header h2 {
+            margin: 0;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.5px;
+        }
 
-input, select, textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  margin-bottom: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-}
+        .header p {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 5px;
+        }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
+        section {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-button {
-  width: 100%;
-  padding: 12px;
-  background: #25D366;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
+        section:last-of-type { border-bottom: none; }
 
-button:hover {
-  background: #1ebe5d;
-}
-</style>
+        label {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+            color: #475569;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all 0.2s;
+            background-color: #f8fafc;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-photo {
+            background: #fff;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .btn-photo:hover {
+            background: #f0f9ff;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .photo-hint {
+            font-size: 12px;
+            color: #64748b;
+            text-align: center;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
+    <div class="header">
+        <h2>Schicht B Protokoll</h2>
+        <p>Produktionsdaten und Fotos übermitteln</p>
+    </div>
 
-<h2>Schicht B Eingabe</h2>
-
-<label>Mitarbeiter:</label>
-<select id="worker" onchange="checkWorker()">
-  <option value="">-- auswählen --</option>
-  <option>Aldirmaz P. - 577</option>
-  <option>Anderwald R. - 509 E</option>
-  <option>Bayrakli F. - 1377 E</option>
-  <option>Kilic D. - 1384 E</option>
-  <option>Maafi T. - 1273 E</option>
-  <option>Besche T. - 1472</option>
-  <option>Eickhoff P. - 1406</option>
-  <option>Toth, Renata - 1699</option>
-  <option>Gibba N. - 1367</option>
-  <option>Helf A. - 1483</option>
-  <option>Isbir J. - 1715</option>
-  <option>Jeyakumar S. - 1698</option>
-  <option>Kalisch T. - 1451</option>
-  <option>Keskin Mur. - 517</option>
-  <option>Kowarsch R. - 484</option>
-  <option>Nowak M. - 1390</option>
-  <option>Pähler D. - 1332</option>
-  <option>Patarcsity V. - 1700</option>
-  <option>Pulendran K. - 1498</option>
-  <option>Sahin E. - 1721</option>
-  <option>Savas S. - 1360</option>
-  <option>Schiavitelli C. - 1669</option>
-  <option>Uluyüz B. - 1450</option>
-  <option>Uzun S. - 1433</option>
-  <option>Klomrit, Thanin - 1070</option>
-  <option>Garcia-Hervas, Francisco - 339</option>
-  <option value="other">Andere...</option>
-</select>
-
-<input type="text" id="customName" placeholder="Name eingeben" style="display:none;">
-
-<!-- ANLAGE DROPDOWN -->
-<label>Anlage</label>
-<select id="anlage">
-  <option value="">-- auswählen --</option>
-  <option>PUR1</option>
-  <option>PUR2</option>
-  <option>PUR3</option>
-  <option>PUR4</option>
-  <option>PUR5</option>
-  <option>PUR6</option>
-  <option>PUR7</option>
-  <option>PUR8</option>
-  <option>PUR9</option>
-  <option>CIM1</option>
-  <option>IM1</option>
-  <option>IM2</option>
-  <option>IM3</option>
-  <option>IM4</option>
-  <option>IM5</option>
-</select>
-
-<!-- ARTIKEL 1 -->
-<label>Artikel 1</label>
-<div class="grid">
-  <input type="text" id="artikel1" placeholder="Artikelnummer">
-  <input type="number" id="gut1" placeholder="Gutteile">
-</div>
-<input type="number" id="aus1" placeholder="Ausschuss">
-
-<!-- ARTIKEL 2 -->
-<label>Artikel 2 (optional)</label>
-<div class="grid">
-  <input type="text" id="artikel2" placeholder="Artikelnummer">
-  <input type="number" id="gut2" placeholder="Gutteile">
-</div>
-<input type="number" id="aus2" placeholder="Ausschuss">
-
-<!-- STÖRUNG -->
-<div class="grid">
-  <input type="text" id="stoerung" placeholder="Störung">
-  <input type="number" id="stoerungMin" placeholder="Minuten">
-</div>
-
-<textarea id="notiz" placeholder="Not / Zusatzinfo"></textarea>
-
-<button onclick="sendWhatsApp()">WhatsApp senden</button>
-
-</div>
-
-<script>
-
-function checkWorker() {
-  const worker = document.getElementById("worker").value;
-  const custom = document.getElementById("customName");
-  custom.style.display = worker === "other" ? "block" : "none";
-}
-
-function sendWhatsApp() {
-
-  let worker = document.getElementById("worker").value;
-  const custom = document.getElementById("customName").value;
-
-  if (worker === "other") {
-    worker = custom;
-  }
-
-  const anlage = document.getElementById("anlage").value;
-
-  const artikel1 = document.getElementById("artikel1").value;
-  const gut1 = document.getElementById("gut1").value;
-  const aus1 = document.getElementById("aus1").value;
-
-  const artikel2 = document.getElementById("artikel2").value;
-  const gut2 = document.getElementById("gut2").value;
-  const aus2 = document.getElementById("aus2").value;
-
-  const stoerung = document.getElementById("stoerung").value;
-  const stoerungMin = document.getElementById("stoerungMin").value;
-  const notiz = document.getElementById("notiz").value;
-
-  let artikelText =
-`Artikel 1: ${artikel1}
-Gutteile: ${gut1}
-Ausschuss: ${aus1}`;
-
-  if (artikel2) {
-    artikelText += `
-
-Artikel 2: ${artikel2}
-Gutteile: ${gut2}
-Ausschuss: ${aus2}`;
-  }
-
-  const text =
-`Schicht B
-Mitarbeiter: ${worker}
-Anlage: ${anlage}
-
-${artikelText}
-
-Störung: ${stoerung} (${stoerungMin} min)
-Not: ${notiz}`;
-
-  const url = "https://wa.me/?text=" + encodeURIComponent(text);
-  window.location.href = url;
-}
-
-</script>
-
-</body>
-</html>
+    <section>
+        <div class="section-title">Allgemeine Infos</div>
+        <label>Mitarbeiter</label>
+        <select id="worker" onchange="checkWorker()">
+            <option value="">-- Name auswählen --</option>
+            <option>Aldirmaz P. - 577</option>
+            <option>Anderwald R. - 509 E</option>
+            <option>Bayrakli F. - 1377 E</option>
+            <option>Kilic D. - 1384 E</option>
+            <option>Maafi T. - 1273 E</option>
+            <option>Besche T. - 1472</option>
+            <option>Eickhoff P. - 1406</option>
+            <option>Toth, Renata - 1699</option>
+            <option>Gibba N. - 1367</option>
+            <option>Helf A. - 1483</option>
+            <option>Isbir J. - 1715</option>
+            <option>Jeyakumar S. - 1698</option>
+            <option>Kalisch T. - 1451</option>
+            <option>Keskin Mur. - 517</option>
+            <option>Kowarsch R. - 484</option>
+            <option>Nowak M. - 1390</option>
+            <option>Pähler D. - 1332</option>
+            <option>Patarcsity V. - 1700</option>
+            <option>Pulendran K. - 1498</option>
+            <option>Sahin E. - 1721</option>
+            <option>Savas S. - 1360</option>
+            <option>Schiavitelli C. - 1669</option>
+            <option>Uluyüz B. - 1450</
