@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --alacati-mavi: #78a2cc; /* Alacatı Mavisi Tonu */
-            --apg-dark: #1a2a5e;    /* Koyu lacivert (detaylar için) */
+            --alacati-mavi: #78a2cc; 
+            --apg-dark: #1a2a5e;    
             --wa-green: #25D366;
             --bg: #f1f5f9;
             --card: #ffffff;
@@ -41,13 +41,13 @@
         }
 
         .company-name {
-            color: var(--alacati-mavi); /* Alacatı Mavisi Uygulandı */
+            color: var(--alacati-mavi);
             font-size: 28px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -0.5px;
             margin: 0;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.05); /* Hafif derinlik */
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.05);
         }
 
         h2 {
@@ -134,6 +134,16 @@
             border: 2px solid var(--apg-dark);
         }
 
+        #imageStatus {
+            font-size: 12px;
+            color: #16a34a;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+
         button:active {
             transform: scale(0.98);
             opacity: 0.8;
@@ -149,7 +159,6 @@
     
     <h2>Schicht-B</h2>
 
-    <!-- Formun geri kalanı aynı şekilde devam ediyor... -->
     <div class="section-label">Personal & Anlage</div>
     
     <label>Mitarbeiter</label>
@@ -200,8 +209,14 @@
     <label>Artikel 1</label>
     <input type="text" id="artikel1" placeholder="Artikelnummer">
     <div class="grid">
-        <input type="number" id="gut1" placeholder="Gutteile">
-        <input type="number" id="aus1" placeholder="Ausschuss">
+        <div>
+            <label style="font-size:11px">Gut</label>
+            <input type="number" id="gut1" placeholder="Gutteile">
+        </div>
+        <div>
+            <label style="font-size:11px">Fire (Ausschuss)</label>
+            <input type="number" id="aus1" placeholder="Fire">
+        </div>
     </div>
 
     <div class="section-label">Störungen & Info</div>
@@ -212,13 +227,15 @@
     </div>
     <textarea id="notiz" rows="2" placeholder="Notizen..."></textarea>
 
+    <div id="imageStatus">📸 Foto bereit zum Senden</div>
+
     <div class="btn-group">
-        <button class="btn-wa" onclick="sendWhatsApp()">
-            WhatsApp senden
-        </button>
-        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;" onchange="imageSelected()">
         <button class="btn-img" onclick="document.getElementById('cameraInput').click()">
             Foto aufnehmen
+        </button>
+        <button class="btn-wa" onclick="sendWhatsApp()">
+            WhatsApp senden
         </button>
     </div>
 </div>
@@ -228,6 +245,13 @@
         var selection = document.getElementById("worker").value;
         var customInput = document.getElementById("customName");
         customInput.style.display = (selection === "other") ? "block" : "none";
+    }
+
+    function imageSelected() {
+        var status = document.getElementById("imageStatus");
+        if(document.getElementById("cameraInput").files.length > 0) {
+            status.style.display = "block";
+        }
     }
 
     function sendWhatsApp() {
@@ -240,15 +264,29 @@
             return;
         }
 
+        var artikel = document.getElementById("artikel1").value || "---";
+        var gut = document.getElementById("gut1").value || 0;
+        var fire = document.getElementById("aus1").value || 0;
+        var stoerung = document.getElementById("stoerung").value || "Keine";
+        var min = document.getElementById("stoerungMin").value || 0;
+        var notiz = document.getElementById("notiz").value || "Keine Notiz";
+        
+        // Foto kontrolü
+        var hasImage = document.getElementById("cameraInput").files.length > 0 ? "✅ Foto beigefügt (Bitte manuell anhängen)" : "❌ Kein Foto";
+
         var text = "*APG - SCHICHT B BERICHT*\n" +
                    "--------------------------\n" +
                    "*Mitarbeiter:* " + worker + "\n" +
                    "*Anlage:* " + anlage + "\n" +
-                   "*Artikel:* " + document.getElementById("artikel1").value + "\n" +
-                   "*Gut:* " + (document.getElementById("gut1").value || 0) + "\n" +
-                   "*Fire:* " + (document.getElementById("aus1").value || 0) + "\n" +
-                   "*Störung:* " + (document.getElementById("stoerung").value || "Keine") + " (" + (document.getElementById("stoerungMin").value || 0) + " min)";
+                   "*Artikel:* " + artikel + "\n" +
+                   "*Gut:* " + gut + "\n" +
+                   "*Fire:* " + fire + "\n" + // HATA 1 DÜZELTİLDİ
+                   "*Störung:* " + stoerung + " (" + min + " min)\n" +
+                   "*Notizen:* " + notiz + "\n" + // HATA 2 DÜZELTİLDİ
+                   "--------------------------\n" +
+                   "*Status:* " + hasImage; // HATA 3 BİLGİSİ
 
+        // WhatsApp'ı açar
         window.open("https://wa.me/?text=" + encodeURIComponent(text));
     }
 </script>
