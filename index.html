@@ -214,8 +214,8 @@
             <input type="number" id="gut1" placeholder="Gutteile">
         </div>
         <div>
-            <label style="font-size:11px">Fire (Ausschuss)</label>
-            <input type="number" id="aus1" placeholder="Fire">
+            <label style="font-size:11px">Ausschuss</label>
+            <input type="number" id="aus1" placeholder="Ausschuss">
         </div>
     </div>
 
@@ -266,12 +266,11 @@
 
         var artikel = document.getElementById("artikel1").value || "---";
         var gut = document.getElementById("gut1").value || 0;
-        var fire = document.getElementById("aus1").value || 0;
+        var ausschuss = document.getElementById("aus1").value || 0;
         var stoerung = document.getElementById("stoerung").value || "Keine";
         var min = document.getElementById("stoerungMin").value || 0;
         var notiz = document.getElementById("notiz").value || "Keine Notiz";
         
-        // Foto kontrolü
         var hasImage = document.getElementById("cameraInput").files.length > 0 ? "✅ Foto beigefügt (Bitte manuell anhängen)" : "❌ Kein Foto";
 
         var text = "*APG - SCHICHT B BERICHT*\n" +
@@ -280,13 +279,12 @@
                    "*Anlage:* " + anlage + "\n" +
                    "*Artikel:* " + artikel + "\n" +
                    "*Gut:* " + gut + "\n" +
-                   "*Fire:* " + fire + "\n" + // HATA 1 DÜZELTİLDİ
+                   "*Ausschuss:* " + ausschuss + "\n" + 
                    "*Störung:* " + stoerung + " (" + min + " min)\n" +
-                   "*Notizen:* " + notiz + "\n" + // HATA 2 DÜZELTİLDİ
+                   "*Notizen:* " + notiz + "\n" +
                    "--------------------------\n" +
-                   "*Status:* " + hasImage; // HATA 3 BİLGİSİ
+                   "*Status:* " + hasImage;
 
-        // WhatsApp'ı açar
         window.open("https://wa.me/?text=" + encodeURIComponent(text));
     }
 </script>
