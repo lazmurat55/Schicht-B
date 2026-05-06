@@ -1,169 +1,137 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schicht B - Produktionsbericht</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>APG - Schicht B Raporu</title>
+    
+    <!-- PWA / Ana Ekran Uygulama Ayarları -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="APG B">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1541/1541414.png">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --alacati-mavi: #78a2cc; 
+            --apg-mavi: #78a2cc; 
             --apg-dark: #1a2a5e;    
             --wa-green: #25D366;
-            --bg: #f1f5f9;
-            --card: #ffffff;
-            --text: #1e293b;
-            --border: #cbd5e1;
+            --bg: #f8fafc;
+            --border: #e2e8f0;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
-            color: var(--text);
             margin: 0;
             padding: 15px;
             display: flex;
             justify-content: center;
+            min-height: 100vh;
         }
 
-        .container {
+        .card {
             width: 100%;
-            max-width: 500px;
-            background: var(--card);
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 450px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-top: 6px solid var(--apg-dark);
         }
 
-        .company-header {
-            text-align: center;
-            margin-bottom: 5px;
-        }
+        .header { text-align: center; margin-bottom: 20px; }
+        .company-name { color: var(--apg-dark); font-size: 22px; font-weight: 800; margin: 0; }
+        .schicht-tag { color: var(--apg-mavi); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
 
-        .company-name {
-            color: var(--alacati-mavi);
-            font-size: 28px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-            margin: 0;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.05);
-        }
-
-        h2 {
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 25px;
-            color: var(--apg-dark);
-            font-weight: 600;
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.7;
-        }
-
-        .section-label {
+        .section-title {
             font-size: 11px;
             text-transform: uppercase;
-            font-weight: 700;
-            color: #64748b;
-            margin: 20px 0 10px 0;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 5px;
+            font-weight: 800;
+            color: #94a3b8;
+            margin: 15px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: #e2e8f0; }
 
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
+        label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 6px; color: #334155; }
 
         select, input, textarea {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             margin-bottom: 15px;
-            border: 1.5px solid var(--border);
-            border-radius: 8px;
-            font-size: 15px;
-            box-sizing: border-box;
-            background: #fff;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--alacati-mavi);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .btn-group {
-            margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
             font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
+            box-sizing: border-box;
+            background: #fbfcfd;
+            font-family: inherit;
+            transition: all 0.2s;
         }
+
+        input:focus, select:focus { border-color: var(--apg-mavi); outline: none; background: #fff; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
         .btn-wa {
             background-color: var(--wa-green);
             color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
 
-        .btn-img {
-            background-color: #fff;
+        .btn-camera {
+            background-color: white;
             color: var(--apg-dark);
             border: 2px solid var(--apg-dark);
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            width: 100%;
+            cursor: pointer;
         }
 
-        #imageStatus {
+        #imgLabel {
+            text-align: center;
             font-size: 12px;
             color: #16a34a;
-            font-weight: 600;
-            text-align: center;
+            font-weight: 700;
             display: none;
-            margin-top: -5px;
             margin-bottom: 10px;
         }
 
-        button:active {
-            transform: scale(0.98);
-            opacity: 0.8;
-        }
+        button:active { transform: scale(0.97); }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="company-header">
+<div class="card">
+    <div class="header">
         <p class="company-name">ADLER PELZER GROUP</p>
+        <span class="schicht-tag">Schicht-B Report</span>
     </div>
-    
-    <h2>Schicht-B</h2>
 
-    <div class="section-label">Personal & Anlage</div>
+    <div class="section-title">Personal / Anlage</div>
     
-    <label>Mitarbeiter</label>
-    <select id="worker" onchange="checkWorker()">
-        <option value="">-- Bitte wählen --</option>
+    <label>Mitarbeiter Name</label>
+    <select id="worker" onchange="toggleCustomWorker()">
+        <option value="">-- Name wählen --</option>
         <option>Aldirmaz P. - 577</option>
         <option>Anderwald R. - 509 E</option>
         <option>Bayrakli F. - 1377 E</option>
@@ -190,13 +158,13 @@
         <option>Uzun S. - 1433</option>
         <option>Klomrit, Thanin - 1070</option>
         <option>Garcia-Hervas, Francisco - 339</option>
-        <option value="other">Andere...</option>
+        <option value="other">Andere (Eingeben)...</option>
     </select>
-    <input type="text" id="customName" style="display:none;" placeholder="Name hier eingeben">
+    <input type="text" id="workerOther" style="display:none;" placeholder="Name hier eingeben">
 
-    <label>Anlage</label>
+    <label>Anlage (Maschine)</label>
     <select id="anlage">
-        <option value="">-- Bitte wählen --</option>
+        <option value="">-- Anlage wählen --</option>
         <option>PUR1</option><option>PUR2</option><option>PUR3</option>
         <option>PUR4</option><option>PUR5</option><option>PUR6</option>
         <option>PUR7</option><option>PUR8</option><option>PUR9</option>
@@ -204,89 +172,99 @@
         <option>IM3</option><option>IM4</option><option>IM5</option>
     </select>
 
-    <div class="section-label">Produktion</div>
+    <div class="section-title">Produktionsdaten</div>
     
-    <label>Artikel 1</label>
-    <input type="text" id="artikel1" placeholder="Artikelnummer">
-    <div class="grid">
+    <label>Artikelnummer</label>
+    <input type="text" id="artikel" placeholder="z.B. 1023456">
+
+    <div class="grid-2">
         <div>
-            <label style="font-size:11px">Gut</label>
-            <input type="number" id="gut1" placeholder="Gutteile">
+            <label>Gut-Teile</label>
+            <input type="number" id="gut" placeholder="0" inputmode="numeric">
         </div>
         <div>
-            <label style="font-size:11px">Ausschuss</label>
-            <input type="number" id="aus1" placeholder="Ausschuss">
+            <label>Ausschuss</label>
+            <input type="number" id="aus" placeholder="0" inputmode="numeric">
         </div>
     </div>
 
-    <div class="section-label">Störungen & Info</div>
+    <div class="section-title">Störungen & Info</div>
     
-    <div class="grid">
-        <input type="text" id="stoerung" placeholder="Störung">
-        <input type="number" id="stoerungMin" placeholder="Minuten">
+    <div class="grid-2">
+        <div>
+            <label>Störungsgrund</label>
+            <input type="text" id="stoerung" placeholder="Grund">
+        </div>
+        <div>
+            <label>Dauer (Min)</label>
+            <input type="number" id="dauer" placeholder="0" inputmode="numeric">
+        </div>
     </div>
-    <textarea id="notiz" rows="2" placeholder="Notizen..."></textarea>
+    
+    <label>Notizen</label>
+    <textarea id="notiz" rows="2" placeholder="Besonderheiten..."></textarea>
 
-    <div id="imageStatus">📸 Foto bereit zum Senden</div>
+    <div id="imgLabel">📸 Foto erfolgreich aufgenommen</div>
+    
+    <input type="file" id="camera" accept="image/*" capture="environment" style="display:none" onchange="updateImgStatus()">
+    <button class="btn-camera" onclick="document.getElementById('camera').click()">📸 FOTO AUFNEHMEN</button>
 
-    <div class="btn-group">
-        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;" onchange="imageSelected()">
-        <button class="btn-img" onclick="document.getElementById('cameraInput').click()">
-            Foto aufnehmen
-        </button>
-        <button class="btn-wa" onclick="sendWhatsApp()">
-            WhatsApp senden
-        </button>
-    </div>
+    <button class="btn-wa" onclick="generateReport()">
+        BERICHT PER WHATSAPP SENDEN
+    </button>
 </div>
 
 <script>
-    function checkWorker() {
-        var selection = document.getElementById("worker").value;
-        var customInput = document.getElementById("customName");
-        customInput.style.display = (selection === "other") ? "block" : "none";
+    function toggleCustomWorker() {
+        const sel = document.getElementById("worker").value;
+        document.getElementById("workerOther").style.display = (sel === "other") ? "block" : "none";
     }
 
-    function imageSelected() {
-        var status = document.getElementById("imageStatus");
-        if(document.getElementById("cameraInput").files.length > 0) {
-            status.style.display = "block";
+    function updateImgStatus() {
+        if(document.getElementById("camera").files.length > 0) {
+            document.getElementById("imgLabel").style.display = "block";
         }
     }
 
-    function sendWhatsApp() {
-        var worker = document.getElementById("worker").value;
-        if (worker === "other") worker = document.getElementById("customName").value;
-        var anlage = document.getElementById("anlage").value;
-        
-        if (!worker || !anlage) {
-            alert("Mitarbeiter und Anlage fehlen!");
+    function generateReport() {
+        const phone = "905366455131";
+        let worker = document.getElementById("worker").value;
+        if(worker === "other") worker = document.getElementById("workerOther").value;
+        const anlage = document.getElementById("anlage").value;
+
+        if(!worker || !anlage) {
+            alert("❌ Bitte Name ve Anlage wählen!");
             return;
         }
 
-        var artikel = document.getElementById("artikel1").value || "---";
-        var gut = document.getElementById("gut1").value || 0;
-        var ausschuss = document.getElementById("aus1").value || 0;
-        var stoerung = document.getElementById("stoerung").value || "Keine";
-        var min = document.getElementById("stoerungMin").value || 0;
-        var notiz = document.getElementById("notiz").value || "Keine Notiz";
-        
-        var hasImage = document.getElementById("cameraInput").files.length > 0 ? "✅ Foto beigefügt (Bitte manuell anhängen)" : "❌ Kein Foto";
+        const artikel = document.getElementById("artikel").value || "---";
+        const gut = document.getElementById("gut").value || "0";
+        const aus = document.getElementById("aus").value || "0";
+        const stoer = document.getElementById("stoerung").value || "Keine";
+        const dauer = document.getElementById("dauer").value || "0";
+        const notiz = document.getElementById("notiz").value || "Keine";
+        const hasImg = document.getElementById("camera").files.length > 0 ? "✅ JA" : "❌ NEIN";
 
-        var text = "*APG - SCHICHT B BERICHT*\n" +
-                   "--------------------------\n" +
-                   "*Mitarbeiter:* " + worker + "\n" +
-                   "*Anlage:* " + anlage + "\n" +
-                   "*Artikel:* " + artikel + "\n" +
-                   "*Gut:* " + gut + "\n" +
-                   "*Ausschuss:* " + ausschuss + "\n" + 
-                   "*Störung:* " + stoerung + " (" + min + " min)\n" +
-                   "*Notizen:* " + notiz + "\n" +
-                   "--------------------------\n" +
-                   "*Status:* " + hasImage;
+        const now = new Date();
+        const time = now.toLocaleDateString('de-DE') + " " + now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
 
-        window.open("https://wa.me/?text=" + encodeURIComponent(text));
+        const text = `📊 *APG BERICHT - SCHICHT B*\n` +
+                     `📅 *Zeit:* ${time}\n` +
+                     `--------------------------\n` +
+                     `👤 *Mitarbeiter:* ${worker}\n` +
+                     `🏗️ *Anlage:* ${anlage}\n\n` +
+                     `📦 *Artikel:* ${artikel}\n` +
+                     `✅ *Gut:* ${gut} Stk.\n` +
+                     `🗑️ *Ausschuss:* ${aus} Stk.\n` +
+                     `--------------------------\n` +
+                     `⚠️ *Störung:* ${stoer} (${dauer} min)\n` +
+                     `📝 *Notiz:* ${notiz}\n` +
+                     `📸 *Foto beigefügt:* ${hasImg}\n` +
+                     `--------------------------`;
+
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
     }
 </script>
+
 </body>
 </html>
