@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>APG - Schicht B Raporu</title>
+    <title>APG - Schicht B Report</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -31,8 +31,8 @@
         
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
-        .btn-secondary { background: #e2e8f0; color: #475569; border: none; padding: 8px; border-radius: 10px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 15px; font-size: 12px; }
-        .btn-add-art { background: var(--apg-dark); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 20px; }
+        .btn-secondary { background: #e2e8f0; color: #475569; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 15px; font-size: 13px; }
+        .btn-add-art { background: var(--apg-dark); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 20px; font-size: 14px; }
         
         .btn-wa { background-color: var(--wa-green); color: white; border: none; padding: 18px; border-radius: 14px; font-size: 16px; font-weight: 800; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; }
         .btn-camera { background-color: white; color: var(--apg-dark); border: 2px solid var(--apg-dark); padding: 12px; border-radius: 12px; font-weight: 700; margin-bottom: 10px; width: 100%; cursor: pointer; }
@@ -47,7 +47,7 @@
         <span class="schicht-tag">Schicht-B Report</span>
     </div>
 
-    <!-- PERSONEL BÖLÜMÜ -->
+    <!-- PERSONAL SEKTION -->
     <div class="section-title">Personal</div>
     <div id="workerContainer">
         <div class="worker-item">
@@ -56,13 +56,12 @@
                 <option>Aldirmaz P. - 577</option>
                 <option>Anderwald R. - 509 E</option>
                 <option>Bayrakli F. - 1377 E</option>
-                <option>Besche T. - 1472</option>
                 <option>Keskin Mur. - 517</option>
                 <option>Uluyüz B. - 1450</option>
             </select>
         </div>
     </div>
-    <button class="btn-secondary" onclick="addWorkerField()">👤 + Başka Personel Ekle</button>
+    <button class="btn-secondary" onclick="addWorkerField()">👤 Weiteren Mitarbeiter hinzufügen</button>
 
     <div class="section-title">Anlage</div>
     <select id="anlage">
@@ -72,7 +71,7 @@
         <option>IM1</option><option>IM2</option>
     </select>
 
-    <!-- ÜRETİM BÖLÜMÜ -->
+    <!-- PRODUKTION SEKTION -->
     <div class="section-title">Produktionsdaten</div>
     <div id="artikelContainer">
         <div class="artikel-item">
@@ -90,14 +89,14 @@
             </div>
         </div>
     </div>
-    <button class="btn-add-art" onclick="addArtikelField()">📦 + Başka Artikel Ekle</button>
+    <button class="btn-add-art" onclick="addArtikelField()">📦 Weiteren Artikel hinzufügen</button>
 
-    <!-- ARIZA VE NOTLAR -->
+    <!-- STÖRUNGEN SEKTION -->
     <div class="section-title">Störungen & Info</div>
     <div class="grid-2">
         <div>
-            <label>Störungsgrund</label>
-            <input type="text" id="stoerung" placeholder="Grund">
+            <label>Grund</label>
+            <input type="text" id="stoerung" placeholder="Störungsgrund">
         </div>
         <div>
             <label>Dauer (Min)</label>
@@ -105,10 +104,10 @@
         </div>
     </div>
     
-    <label>Notizen</label>
-    <textarea id="notiz" rows="2" placeholder="Besonderheiten..."></textarea>
+    <label>Zusätzliche Notizen</label>
+    <textarea id="notiz" rows="2" placeholder="Besonderheiten der Schicht..."></textarea>
 
-    <div id="imgLabel">📸 Foto aufgenommen</div>
+    <div id="imgLabel">📸 Foto erfolgreich aufgenommen</div>
     <input type="file" id="camera" accept="image/*" capture="environment" style="display:none" onchange="updateImgStatus()">
     <button class="btn-camera" onclick="document.getElementById('camera').click()">📸 FOTO AUFNEHMEN</button>
 
@@ -118,7 +117,6 @@
 </div>
 
 <script>
-    // Yeni Personel Alanı Ekle
     function addWorkerField() {
         const container = document.getElementById("workerContainer");
         const div = document.createElement("div");
@@ -127,7 +125,6 @@
         container.appendChild(div);
     }
 
-    // Yeni Artikel Alanı Ekle
     function addArtikelField() {
         const container = document.getElementById("artikelContainer");
         const div = document.createElement("div");
@@ -157,25 +154,23 @@
     function generateReport() {
         const phone = "905366455131";
         
-        // Personelleri Topla
         const workerSelects = document.querySelectorAll(".worker-select");
         let workers = [];
         workerSelects.forEach(s => { if(s.value) workers.push(s.value); });
         
         const anlage = document.getElementById("anlage").value;
         if(workers.length === 0 || !anlage) {
-            alert("❌ Name und Anlage wählen!");
+            alert("❌ Bitte Name und Anlage auswählen!");
             return;
         }
 
-        // Artikelleri Topla
         const artikelNodes = document.querySelectorAll(".artikel-item");
         let artikelText = "";
         artikelNodes.forEach((node, i) => {
             const no = node.querySelector(".artikel-no").value || "---";
             const gut = node.querySelector(".gut-sayisi").value || "0";
             const aus = node.querySelector(".aus-sayisi").value || "0";
-            artikelText += `📦 *Art ${i+1}:* ${no} | ✅ ${gut} | 🗑️ ${aus}\n`;
+            artikelText += `📦 *Art ${i+1}:* ${no} | ✅ Gut: ${gut} | 🗑️ Aus: ${aus}\n`;
         });
 
         const stoer = document.getElementById("stoerung").value || "Keine";
@@ -187,7 +182,7 @@
         const time = now.toLocaleDateString('de-DE') + " " + now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
 
         const text = `📊 *APG BERICHT - SCHICHT B*\n` +
-                     `📅 *Zeit:* ${time}\n` +
+                     `📅 *Datum/Zeit:* ${time}\n` +
                      `👤 *Mitarbeiter:* ${workers.join(", ")}\n` +
                      `🏗️ *Anlage:* ${anlage}\n` +
                      `--------------------------\n` +
@@ -195,7 +190,7 @@
                      `--------------------------\n` +
                      `⚠️ *Störung:* ${stoer} (${dauer} min)\n` +
                      `📝 *Notiz:* ${notiz}\n` +
-                     `📸 *Foto:* ${hasImg}`;
+                     `📸 *Foto beigefügt:* ${hasImg}`;
 
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
     }
