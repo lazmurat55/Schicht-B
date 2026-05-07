@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -6,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>APG - Schicht B Raporu</title>
     
-    <!-- PWA / Ana Ekran Uygulama Ayarları -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="APG B">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1541/1541414.png">
-    <meta name="mobile-web-app-capable" content="yes">
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -23,99 +15,24 @@
             --border: #e2e8f0;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .card {
-            width: 100%;
-            max-width: 450px;
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border-top: 6px solid var(--apg-dark);
-        }
-
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); margin: 0; padding: 15px; display: flex; justify-content: center; min-height: 100vh; }
+        .card { width: 100%; max-width: 450px; background: #ffffff; border-radius: 24px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 6px solid var(--apg-dark); }
         .header { text-align: center; margin-bottom: 20px; }
         .company-name { color: var(--apg-dark); font-size: 22px; font-weight: 800; margin: 0; }
         .schicht-tag { color: var(--apg-mavi); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
-
-        .section-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            font-weight: 800;
-            color: #94a3b8;
-            margin: 15px 0 10px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .section-title { font-size: 11px; text-transform: uppercase; font-weight: 800; color: #94a3b8; margin: 15px 0 10px 0; display: flex; align-items: center; gap: 8px; }
         .section-title::after { content: ""; flex: 1; height: 1px; background: #e2e8f0; }
-
-        label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 6px; color: #334155; }
-
-        select, input, textarea {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 15px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 16px;
-            box-sizing: border-box;
-            background: #fbfcfd;
-            font-family: inherit;
-            transition: all 0.2s;
-        }
-
+        label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #334155; }
+        select, input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 2px solid var(--border); border-radius: 12px; font-size: 16px; box-sizing: border-box; background: #fbfcfd; font-family: inherit; transition: all 0.2s; }
         input:focus, select:focus { border-color: var(--apg-mavi); outline: none; background: #fff; }
-
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-        .btn-wa {
-            background-color: var(--wa-green);
-            color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-        }
-
-        .btn-camera {
-            background-color: white;
-            color: var(--apg-dark);
-            border: 2px solid var(--apg-dark);
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        #imgLabel {
-            text-align: center;
-            font-size: 12px;
-            color: #16a34a;
-            font-weight: 700;
-            display: none;
-            margin-bottom: 10px;
-        }
-
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        /* Dinamik Ürün Kartı Stili */
+        .artikel-item { background: #f1f5f9; padding: 15px; border-radius: 16px; margin-bottom: 15px; border: 1px solid #e2e8f0; position: relative; }
+        .btn-add { background: var(--apg-dark); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 20px; font-size: 14px; }
+        .btn-wa { background-color: var(--wa-green); color: white; border: none; padding: 18px; border-radius: 14px; font-size: 16px; font-weight: 800; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(37,211,102,0.3); }
+        .btn-camera { background-color: white; color: var(--apg-dark); border: 2px solid var(--apg-dark); padding: 12px; border-radius: 12px; font-weight: 700; margin-bottom: 10px; width: 100%; cursor: pointer; }
+        #imgLabel { text-align: center; font-size: 12px; color: #16a34a; font-weight: 700; display: none; margin-bottom: 10px; }
         button:active { transform: scale(0.97); }
     </style>
 </head>
@@ -128,36 +45,11 @@
     </div>
 
     <div class="section-title">Personal / Anlage</div>
-    
     <label>Mitarbeiter Name</label>
     <select id="worker" onchange="toggleCustomWorker()">
         <option value="">-- Name wählen --</option>
         <option>Aldirmaz P. - 577</option>
-        <option>Anderwald R. - 509 E</option>
-        <option>Bayrakli F. - 1377 E</option>
-        <option>Kilic D. - 1384 E</option>
-        <option>Maafi T. - 1273 E</option>
-        <option>Besche T. - 1472</option>
-        <option>Eickhoff P. - 1406</option>
-        <option>Toth, Renata - 1699</option>
-        <option>Gibba N. - 1367</option>
-        <option>Helf A. - 1483</option>
-        <option>Isbir J. - 1715</option>
-        <option>Jeyakumar S. - 1698</option>
-        <option>Kalisch T. - 1451</option>
         <option>Keskin Mur. - 517</option>
-        <option>Kowarsch R. - 484</option>
-        <option>Nowak M. - 1390</option>
-        <option>Pähler D. - 1332</option>
-        <option>Patarcsity V. - 1700</option>
-        <option>Pulendran K. - 1498</option>
-        <option>Sahin E. - 1721</option>
-        <option>Savas S. - 1360</option>
-        <option>Schiavitelli C. - 1669</option>
-        <option>Uluyüz B. - 1450</option>
-        <option>Uzun S. - 1433</option>
-        <option>Klomrit, Thanin - 1070</option>
-        <option>Garcia-Hervas, Francisco - 339</option>
         <option value="other">Andere (Eingeben)...</option>
     </select>
     <input type="text" id="workerOther" style="display:none;" placeholder="Name hier eingeben">
@@ -166,30 +58,32 @@
     <select id="anlage">
         <option value="">-- Anlage wählen --</option>
         <option>PUR1</option><option>PUR2</option><option>PUR3</option>
-        <option>PUR4</option><option>PUR5</option><option>PUR6</option>
-        <option>PUR7</option><option>PUR8</option><option>PUR9</option>
-        <option>CIM1</option><option>IM1</option><option>IM2</option>
-        <option>IM3</option><option>IM4</option><option>IM5</option>
+        <option>CIM1</option><option>IM1</option>
     </select>
 
     <div class="section-title">Produktionsdaten</div>
     
-    <label>Artikelnummer</label>
-    <input type="text" id="artikel" placeholder="z.B. 1023456">
-
-    <div class="grid-2">
-        <div>
-            <label>Gut-Teile</label>
-            <input type="number" id="gut" placeholder="0" inputmode="numeric">
-        </div>
-        <div>
-            <label>Ausschuss</label>
-            <input type="number" id="aus" placeholder="0" inputmode="numeric">
+    <!-- Dinamik Alanların Ekleneceği Yer -->
+    <div id="artikelContainer">
+        <div class="artikel-item">
+            <label>Artikelnummer</label>
+            <input type="text" class="artikel-no" placeholder="z.B. 1023456">
+            <div class="grid-2">
+                <div>
+                    <label>Gut-Teile</label>
+                    <input type="number" class="gut-sayisi" placeholder="0" inputmode="numeric">
+                </div>
+                <div>
+                    <label>Ausschuss</label>
+                    <input type="number" class="aus-sayisi" placeholder="0" inputmode="numeric">
+                </div>
+            </div>
         </div>
     </div>
 
+    <button class="btn-add" onclick="addArtikelField()">➕ Başka Artikel Ekle</button>
+
     <div class="section-title">Störungen & Info</div>
-    
     <div class="grid-2">
         <div>
             <label>Störungsgrund</label>
@@ -205,7 +99,6 @@
     <textarea id="notiz" rows="2" placeholder="Besonderheiten..."></textarea>
 
     <div id="imgLabel">📸 Foto erfolgreich aufgenommen</div>
-    
     <input type="file" id="camera" accept="image/*" capture="environment" style="display:none" onchange="updateImgStatus()">
     <button class="btn-camera" onclick="document.getElementById('camera').click()">📸 FOTO AUFNEHMEN</button>
 
@@ -215,6 +108,28 @@
 </div>
 
 <script>
+    // Yeni artikel girişi ekleyen fonksiyon
+    function addArtikelField() {
+        const container = document.getElementById("artikelContainer");
+        const newField = document.createElement("div");
+        newField.className = "artikel-item";
+        newField.innerHTML = `
+            <label>Artikelnummer</label>
+            <input type="text" class="artikel-no" placeholder="z.B. 1023456">
+            <div class="grid-2">
+                <div>
+                    <label>Gut-Teile</label>
+                    <input type="number" class="gut-sayisi" placeholder="0" inputmode="numeric">
+                </div>
+                <div>
+                    <label>Ausschuss</label>
+                    <input type="number" class="aus-sayisi" placeholder="0" inputmode="numeric">
+                </div>
+            </div>
+        `;
+        container.appendChild(newField);
+    }
+
     function toggleCustomWorker() {
         const sel = document.getElementById("worker").value;
         document.getElementById("workerOther").style.display = (sel === "other") ? "block" : "none";
@@ -233,13 +148,24 @@
         const anlage = document.getElementById("anlage").value;
 
         if(!worker || !anlage) {
-            alert("❌ Bitte Name ve Anlage wählen!");
+            alert("❌ Bitte Name und Anlage wählen!");
             return;
         }
 
-        const artikel = document.getElementById("artikel").value || "---";
-        const gut = document.getElementById("gut").value || "0";
-        const aus = document.getElementById("aus").value || "0";
+        // Tüm artikelleri topla
+        const artikelNodes = document.querySelectorAll(".artikel-item");
+        let artikelText = "";
+        
+        artikelNodes.forEach((node, index) => {
+            const no = node.querySelector(".artikel-no").value || "---";
+            const gut = node.querySelector(".gut-sayisi").value || "0";
+            const aus = node.querySelector(".aus-sayisi").value || "0";
+            
+            artikelText += `📦 *Artikel ${index + 1}:* ${no}\n`;
+            artikelText += `✅ *Gut:* ${gut} | 🗑️ *Aus:* ${aus}\n`;
+            artikelText += `--------------------------\n`;
+        });
+
         const stoer = document.getElementById("stoerung").value || "Keine";
         const dauer = document.getElementById("dauer").value || "0";
         const notiz = document.getElementById("notiz").value || "Keine";
@@ -250,17 +176,13 @@
 
         const text = `📊 *APG BERICHT - SCHICHT B*\n` +
                      `📅 *Zeit:* ${time}\n` +
-                     `--------------------------\n` +
                      `👤 *Mitarbeiter:* ${worker}\n` +
-                     `🏗️ *Anlage:* ${anlage}\n\n` +
-                     `📦 *Artikel:* ${artikel}\n` +
-                     `✅ *Gut:* ${gut} Stk.\n` +
-                     `🗑️ *Ausschuss:* ${aus} Stk.\n` +
-                     `--------------------------\n` +
+                     `🏗️ *Anlage:* ${anlage}\n` +
+                     `==========================\n` +
+                     artikelText +
                      `⚠️ *Störung:* ${stoer} (${dauer} min)\n` +
                      `📝 *Notiz:* ${notiz}\n` +
-                     `📸 *Foto beigefügt:* ${hasImg}\n` +
-                     `--------------------------`;
+                     `📸 *Foto:* ${hasImg}`;
 
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
     }
