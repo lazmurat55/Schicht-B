@@ -104,12 +104,18 @@
     </select>
 
     <div id="formtraegerContainer">
-        <label>Formträger (Zorunlu)</label>
-        <select id="formtraeger">
-            <option value="">-- Formträger wählen (1-6) --</option>
-            <option>1</option><option>2</option><option>3</option>
-            <option>4</option><option>5</option><option>6</option>
+        <label>Formträger (Erforderlich)</label>
+        <select id="formtraegerSelect" onchange="checkMultipleFT(this)">
+            <option value="">-- Formträger wählen --</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="Mehrere">Mehrere Formträger</option>
         </select>
+        <input type="text" id="multipleFTInput" style="display:none; border-style: dashed;" placeholder="z.B. 1, 3, 5">
     </div>
 
     <!-- PRODUKTION -->
@@ -191,7 +197,21 @@
         const container = document.getElementById("formtraegerContainer");
         const isPur = anlage.startsWith("PUR");
         container.style.display = isPur ? "block" : "none";
-        if (!isPur) document.getElementById("formtraeger").value = "";
+        if (!isPur) {
+            document.getElementById("formtraegerSelect").value = "";
+            document.getElementById("multipleFTInput").style.display = "none";
+        }
+    }
+
+    function checkMultipleFT(select) {
+        const input = document.getElementById("multipleFTInput");
+        if (select.value === "Mehrere") {
+            input.style.display = "block";
+            input.focus();
+        } else {
+            input.style.display = "none";
+            input.value = "";
+        }
     }
 
     function addWorkerField() {
@@ -230,10 +250,13 @@
     function generateReport() {
         const phone = "4917623638794";
         const anlage = document.getElementById("anlage").value;
-        const formtraeger = document.getElementById("formtraeger").value;
+        const ftSelect = document.getElementById("formtraegerSelect").value;
+        const ftInput = document.getElementById("multipleFTInput").value;
         
-        if (anlage.startsWith("PUR") && !formtraeger) {
-            alert("❌ Bitte Formträger für PUR Anlage auswählen!");
+        let finalFT = ftSelect === "Mehrere" ? ftInput : ftSelect;
+        
+        if (anlage.startsWith("PUR") && !finalFT) {
+            alert("❌ Bitte Formträger (Nummer oder Mehrere) angeben!");
             return;
         }
 
@@ -249,7 +272,7 @@
         });
         
         if(workers.length === 0 || !anlage) {
-            alert("❌ Bitte mindestens einen Mitarbeiter ve Anlage seçiniz!");
+            alert("❌ Bitte mindestens einen Mitarbeiter und eine Anlage auswählen!");
             return;
         }
 
@@ -264,7 +287,7 @@
         const text = `📊 *APG BERICHT - SCHICHT B*\n` +
                      `📅 *Zeit:* ${new Date().toLocaleString('de-DE')}\n` +
                      `👤 *Personal:* ${workers.join(", ")}\n` +
-                     `🏗️ *Anlage:* ${anlage}${formtraeger ? ' (FT: ' + formtraeger + ')' : ''}\n` +
+                     `🏗️ *Anlage:* ${anlage}${finalFT ? ' (FT: ' + finalFT + ')' : ''}\n` +
                      `--------------------------\n` +
                      artikelText +
                      `--------------------------\n` +
