@@ -26,9 +26,10 @@
         label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #334155; }
         select, input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid var(--border); border-radius: 12px; font-size: 16px; box-sizing: border-box; background: #fbfcfd; font-family: inherit; }
         
+        .worker-item { border-left: 4px solid var(--apg-mavi); padding-left: 10px; margin-bottom: 10px; background: #f8fafc; border-radius: 0 12px 12px 0; padding-top: 5px; }
+        .other-name-input { display: none; margin-top: -5px; border-style: dashed; }
+
         #formtraegerContainer { display: none; background: #f0f4f8; padding: 10px; border-radius: 12px; margin-bottom: 10px; border: 1px dashed var(--apg-mavi); }
-        
-        .worker-item { border-left: 4px solid var(--apg-mavi); padding-left: 10px; margin-bottom: 10px; }
         .artikel-item { background: #f1f5f9; padding: 15px; border-radius: 16px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
@@ -47,21 +48,46 @@
         <span class="schicht-tag">Schicht-B Report</span>
     </div>
 
+    <!-- PERSONAL -->
     <div class="section-title">Personal</div>
     <div id="workerContainer">
         <div class="worker-item">
-            <select class="worker-select">
+            <select class="worker-select" onchange="checkOtherWorker(this)">
                 <option value="">-- Name wählen --</option>
-                <option>Aldirmaz P. - 577</option>
+                <option>Aldirmaz P.- 577</option>
                 <option>Anderwald R. - 509 E</option>
                 <option>Bayrakli F. - 1377 E</option>
-                <option>Keskin Mur. - 517</option>
-                <option>Uluyüz B. - 1450</option>
+                <option>Kilic D. - 1384 E</option>
+                <option>Maafi T.- 1273 E</option>
+                <option>Besche T.- 1472</option>
+                <option>Eickhoff P.-1406</option>
+                <option>Toth, Renata-1699</option>
+                <option>Gibba N.- 1367</option>
+                <option>Helf A.- 1483</option>
+                <option>Isbir J.-1715</option>
+                <option>Jeyakumar S.-1698</option>
+                <option>Kalisch T.- 1451</option>
+                <option>Keskin Mur. 517</option>
+                <option>Kowarsch R.-484</option>
+                <option>Nowak M.-1390</option>
+                <option>Pähler D.-1332</option>
+                <option>Patarcsity V.-1700</option>
+                <option>Pulendran K.- 1498</option>
+                <option>Sahin E.-1721</option>
+                <option>Savas S.- 1360</option>
+                <option>Schiavitelli C.-1669</option>
+                <option>Uluyüz B.- 1450</option>
+                <option>Uzun S.-1433</option>
+                <option>Klomrit, Thanin - 1070</option>
+                <option>Garcia-Hervas, Francisco - 339</option>
+                <option value="Sonstige">Sonstige (Name eingeben)</option>
             </select>
+            <input type="text" class="other-name-input" placeholder="Vorname Nachname eingeben">
         </div>
     </div>
     <button class="btn-secondary" onclick="addWorkerField()">👤 Mitarbeiter hinzufügen</button>
 
+    <!-- ANLAGE -->
     <div class="section-title">Anlage & Formträger</div>
     <select id="anlage" onchange="toggleFormtraeger()">
         <option value="">-- Anlage wählen --</option>
@@ -86,25 +112,21 @@
         </select>
     </div>
 
+    <!-- PRODUKTION -->
     <div class="section-title">Produktionsdaten</div>
     <div id="artikelContainer">
         <div class="artikel-item">
             <label>Artikelnummer</label>
             <input type="text" class="artikel-no" placeholder="z.B. 1023456">
             <div class="grid-2">
-                <div>
-                    <label>Gut-Teile</label>
-                    <input type="number" class="gut-sayisi" placeholder="0" inputmode="numeric">
-                </div>
-                <div>
-                    <label>Ausschuss</label>
-                    <input type="number" class="aus-sayisi" placeholder="0" inputmode="numeric">
-                </div>
+                <div><label>Gut-Teile</label><input type="number" class="gut-sayisi" placeholder="0" inputmode="numeric"></div>
+                <div><label>Ausschuss</label><input type="number" class="aus-sayisi" placeholder="0" inputmode="numeric"></div>
             </div>
         </div>
     </div>
     <button class="btn-add-art" onclick="addArtikelField()">📦 Artikel hinzufügen</button>
 
+    <!-- INFO -->
     <div class="section-title">Störungen & Info</div>
     <div class="grid-2">
         <div><label>Grund</label><input type="text" id="stoerung" placeholder="Grund"></div>
@@ -118,29 +140,70 @@
     <input type="file" id="camera" accept="image/*" capture="environment" style="display:none" onchange="updateImgStatus()">
     <button class="btn-camera" onclick="document.getElementById('camera').click()">📸 FOTO AUFNEHMEN</button>
 
-    <button class="btn-wa" onclick="generateReport()">BERICHT SENDEN</button>
+    <button class="btn-wa" onclick="generateReport()">BERICHT PER WHATSAPP SENDEN</button>
 </div>
 
 <script>
+    const workerOptions = `
+        <option value="">-- Name wählen --</option>
+        <option>Aldirmaz P.- 577</option>
+        <option>Anderwald R. - 509 E</option>
+        <option>Bayrakli F. - 1377 E</option>
+        <option>Kilic D. - 1384 E</option>
+        <option>Maafi T.- 1273 E</option>
+        <option>Besche T.- 1472</option>
+        <option>Eickhoff P.-1406</option>
+        <option>Toth, Renata-1699</option>
+        <option>Gibba N.- 1367</option>
+        <option>Helf A.- 1483</option>
+        <option>Isbir J.-1715</option>
+        <option>Jeyakumar S.-1698</option>
+        <option>Kalisch T.- 1451</option>
+        <option>Keskin Mur. 517</option>
+        <option>Kowarsch R.-484</option>
+        <option>Nowak M.-1390</option>
+        <option>Pähler D.-1332</option>
+        <option>Patarcsity V.-1700</option>
+        <option>Pulendran K.- 1498</option>
+        <option>Sahin E.-1721</option>
+        <option>Savas S.- 1360</option>
+        <option>Schiavitelli C.-1669</option>
+        <option>Uluyüz B.- 1450</option>
+        <option>Uzun S.-1433</option>
+        <option>Klomrit, Thanin - 1070</option>
+        <option>Garcia-Hervas, Francisco - 339</option>
+        <option value="Sonstige">Sonstige (Name eingeben)</option>
+    `;
+
+    function checkOtherWorker(selectElement) {
+        const otherInput = selectElement.nextElementSibling;
+        if (selectElement.value === "Sonstige") {
+            otherInput.style.display = "block";
+            otherInput.focus();
+        } else {
+            otherInput.style.display = "none";
+            otherInput.value = "";
+        }
+    }
+
     function toggleFormtraeger() {
         const anlage = document.getElementById("anlage").value;
         const container = document.getElementById("formtraegerContainer");
-        // Sadece PUR1'den PUR9'a kadar olanlarda göster
         const isPur = anlage.startsWith("PUR");
-        
-        if (isPur) {
-            container.style.display = "block";
-        } else {
-            container.style.display = "none";
-            document.getElementById("formtraeger").value = "";
-        }
+        container.style.display = isPur ? "block" : "none";
+        if (!isPur) document.getElementById("formtraeger").value = "";
     }
 
     function addWorkerField() {
         const container = document.getElementById("workerContainer");
         const div = document.createElement("div");
         div.className = "worker-item";
-        div.innerHTML = container.querySelector(".worker-item").innerHTML;
+        div.innerHTML = `
+            <select class="worker-select" onchange="checkOtherWorker(this)">
+                ${workerOptions}
+            </select>
+            <input type="text" class="other-name-input" placeholder="Vorname Nachname eingeben">
+        `;
         container.appendChild(div);
     }
 
@@ -169,17 +232,24 @@
         const anlage = document.getElementById("anlage").value;
         const formtraeger = document.getElementById("formtraeger").value;
         
-        // Formträger Kontrolü (PUR makineleri için zorunlu)
         if (anlage.startsWith("PUR") && !formtraeger) {
-            alert("❌ Bitte Formträger für " + anlage + " auswählen!");
+            alert("❌ Bitte Formträger für PUR Anlage auswählen!");
             return;
         }
 
         let workers = [];
-        document.querySelectorAll(".worker-select").forEach(s => { if(s.value) workers.push(s.value); });
+        document.querySelectorAll(".worker-item").forEach(item => {
+            const select = item.querySelector(".worker-select");
+            const other = item.querySelector(".other-name-input");
+            if (select.value === "Sonstige" && other.value) {
+                workers.push(other.value + " (S)");
+            } else if (select.value && select.value !== "Sonstige") {
+                workers.push(select.value);
+            }
+        });
         
         if(workers.length === 0 || !anlage) {
-            alert("❌ Bitte Name und Anlage auswählen!");
+            alert("❌ Bitte mindestens einen Mitarbeiter ve Anlage seçiniz!");
             return;
         }
 
@@ -191,24 +261,15 @@
             artikelText += `📦 *Art ${i+1}:* ${no} | ✅ Gut: ${gut} | 🗑️ Aus: ${aus}\n`;
         });
 
-        const stoer = document.getElementById("stoerung").value || "Keine";
-        const dauer = document.getElementById("dauer").value || "0";
-        const notiz = document.getElementById("notiz").value || "Keine";
-        const hasImg = document.getElementById("camera").files.length > 0 ? "✅ JA" : "❌ NEIN";
-
-        const now = new Date();
-        const time = now.toLocaleDateString('de-DE') + " " + now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
-
         const text = `📊 *APG BERICHT - SCHICHT B*\n` +
-                     `📅 *Zeit:* ${time}\n` +
+                     `📅 *Zeit:* ${new Date().toLocaleString('de-DE')}\n` +
                      `👤 *Personal:* ${workers.join(", ")}\n` +
                      `🏗️ *Anlage:* ${anlage}${formtraeger ? ' (FT: ' + formtraeger + ')' : ''}\n` +
                      `--------------------------\n` +
                      artikelText +
                      `--------------------------\n` +
-                     `⚠️ *Störung:* ${stoer} (${dauer} min)\n` +
-                     `📝 *Notiz:* ${notiz}\n` +
-                     `📸 *Foto:* ${hasImg}`;
+                     `⚠️ *Störung:* ${document.getElementById("stoerung").value || "Keine"}\n` +
+                     `📝 *Notiz:* ${document.getElementById("notiz").value || "Keine"}`;
 
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
     }
