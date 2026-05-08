@@ -26,14 +26,14 @@
         label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #334155; }
         select, input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid var(--border); border-radius: 12px; font-size: 16px; box-sizing: border-box; background: #fbfcfd; font-family: inherit; }
         
+        #formtraegerContainer { display: none; transition: 0.3s; background: #f0f4f8; padding: 10px; border-radius: 12px; margin-bottom: 10px; }
+        
         .worker-item { border-left: 4px solid var(--apg-mavi); padding-left: 10px; margin-bottom: 10px; }
         .artikel-item { background: #f1f5f9; padding: 15px; border-radius: 16px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
-        
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
         .btn-secondary { background: #e2e8f0; color: #475569; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 15px; font-size: 13px; }
         .btn-add-art { background: var(--apg-dark); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 20px; font-size: 14px; }
-        
         .btn-wa { background-color: var(--wa-green); color: white; border: none; padding: 18px; border-radius: 14px; font-size: 16px; font-weight: 800; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; }
         .btn-camera { background-color: white; color: var(--apg-dark); border: 2px solid var(--apg-dark); padding: 12px; border-radius: 12px; font-weight: 700; margin-bottom: 10px; width: 100%; cursor: pointer; }
         #imgLabel { text-align: center; font-size: 12px; color: #16a34a; font-weight: 700; display: none; margin-bottom: 10px; }
@@ -47,7 +47,7 @@
         <span class="schicht-tag">Schicht-B Report</span>
     </div>
 
-    <!-- PERSONAL SEKTION -->
+    <!-- PERSONAL -->
     <div class="section-title">Personal</div>
     <div id="workerContainer">
         <div class="worker-item">
@@ -63,15 +63,27 @@
     </div>
     <button class="btn-secondary" onclick="addWorkerField()">👤 Weiteren Mitarbeiter hinzufügen</button>
 
-    <div class="section-title">Anlage</div>
-    <select id="anlage">
+    <!-- ANLAGE & FORMTRAEGER -->
+    <div class="section-title">Anlage & Formträger</div>
+    <select id="anlage" onchange="toggleFormtraeger()">
         <option value="">-- Anlage wählen --</option>
         <option>PUR1</option><option>PUR2</option><option>PUR3</option>
-        <option>PUR4</option><option>PUR5</option><option>CIM1</option>
-        <option>IM1</option><option>IM2</option>
+        <option>PUR4</option><option>PUR5</option><option>PUR6</option>
+        <option>PUR7</option><option>PUR8</option><option>PUR9</option>
+        <option>CIM1</option><option>IM1</option><option>IM2</option>
+        <option value="Sonstige">Sonstige</option>
     </select>
 
-    <!-- PRODUKTION SEKTION -->
+    <div id="formtraegerContainer">
+        <label>Formträger wählen (1-6)</label>
+        <select id="formtraeger">
+            <option value="">-- Formträger wählen --</option>
+            <option>1</option><option>2</option><option>3</option>
+            <option>4</option><option>5</option><option>6</option>
+        </select>
+    </div>
+
+    <!-- PRODUKTION -->
     <div class="section-title">Produktionsdaten</div>
     <div id="artikelContainer">
         <div class="artikel-item">
@@ -91,7 +103,7 @@
     </div>
     <button class="btn-add-art" onclick="addArtikelField()">📦 Weiteren Artikel hinzufügen</button>
 
-    <!-- STÖRUNGEN SEKTION -->
+    <!-- STÖRUNGEN -->
     <div class="section-title">Störungen & Info</div>
     <div class="grid-2">
         <div>
@@ -117,6 +129,18 @@
 </div>
 
 <script>
+    function toggleFormtraeger() {
+        const anlage = document.getElementById("anlage").value;
+        const container = document.getElementById("formtraegerContainer");
+        // Eğer Anlage seçiliyse ve "Sonstige" değilse göster
+        if (anlage !== "" && anlage !== "Sonstige") {
+            container.style.display = "block";
+        } else {
+            container.style.display = "none";
+            document.getElementById("formtraeger").value = ""; // Seçimi sıfırla
+        }
+    }
+
     function addWorkerField() {
         const container = document.getElementById("workerContainer");
         const div = document.createElement("div");
@@ -152,22 +176,20 @@
     }
 
     function generateReport() {
-        // GÜNCELLENEN ALMANYA NUMARASI
         const phone = "4917623638794";
-        
-        const workerSelects = document.querySelectorAll(".worker-select");
-        let workers = [];
-        workerSelects.forEach(s => { if(s.value) workers.push(s.value); });
-        
         const anlage = document.getElementById("anlage").value;
+        const formtraeger = document.getElementById("formtraeger").value;
+        
+        let workers = [];
+        document.querySelectorAll(".worker-select").forEach(s => { if(s.value) workers.push(s.value); });
+        
         if(workers.length === 0 || !anlage) {
             alert("❌ Bitte Name und Anlage auswählen!");
             return;
         }
 
-        const artikelNodes = document.querySelectorAll(".artikel-item");
         let artikelText = "";
-        artikelNodes.forEach((node, i) => {
+        document.querySelectorAll(".artikel-item").forEach((node, i) => {
             const no = node.querySelector(".artikel-no").value || "---";
             const gut = node.querySelector(".gut-sayisi").value || "0";
             const aus = node.querySelector(".aus-sayisi").value || "0";
@@ -182,10 +204,13 @@
         const now = new Date();
         const time = now.toLocaleDateString('de-DE') + " " + now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
 
+        // Formträger bilgisini sadece seçiliyse ekle
+        const formInfo = (formtraeger) ? ` (Formträger: ${formtraeger})` : "";
+
         const text = `📊 *APG BERICHT - SCHICHT B*\n` +
                      `📅 *Datum/Zeit:* ${time}\n` +
                      `👤 *Mitarbeiter:* ${workers.join(", ")}\n` +
-                     `🏗️ *Anlage:* ${anlage}\n` +
+                     `🏗️ *Anlage:* ${anlage}${formInfo}\n` +
                      `--------------------------\n` +
                      artikelText +
                      `--------------------------\n` +
