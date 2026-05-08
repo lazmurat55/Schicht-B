@@ -134,12 +134,12 @@
     <!-- STÖRUNGEN -->
     <div class="section-title">Störungen</div>
     <div id="stoerungContainer">
-        <!-- JS ile dolacak -->
+        <!-- JS-Inhalt -->
     </div>
     <button class="btn-secondary" onclick="addStoerungField()">⚠️ Störung hinzufügen</button>
     
     <label>Notizen</label>
-    <textarea id="notiz" rows="2" placeholder="Besonderheiten..."></textarea>
+    <textarea id="notiz" rows="2" placeholder="Besonderheiten oder Anmerkungen..."></textarea>
 
     <div id="imgLabel">📸 Foto aufgenommen</div>
     <input type="file" id="camera" accept="image/*" capture="environment" style="display:none" onchange="updateImgStatus()">
@@ -149,7 +149,7 @@
 </div>
 
 <script>
-    // HATA KODLARI LİSTESİ (EN ÜSTTE OLMALI)
+    // FEHLERCZODES LISTE (PUR)
     const purErrors = {
         "4-2-01": "Ungepl. Instandhaltung an der Werkzeug",
         "4-2-02": "Ungepl. Instandhaltung an der Maschine",
@@ -162,14 +162,14 @@
         "4-2-09": "Not Aus",
         "5-2-01": "Keine Halbfertigteile bereitgestellt (Logistik)",
         "5-2-02": "Keine Halbfertigteile von IM/CIM Anlage",
-        "5-2-03": "Anlernen / angelernt werden",
+        "5-2-03": "Anlernen / angelernt werden von Mitarbeiter",
         "5-2-04": "Keine Produktion aufgrund von Wartezeit",
-        "5-2-05": "Mitarbeiter Umbesetzung (Stillstand)",
+        "5-2-05": "Mitarbeiter Umbesetzung (Anlage steht)",
         "5-2-06": "Unterbesetzung (Performance Verluste)",
-        "5-2-07": "Scanner / Drucker Probleme",
+        "5-2-07": "Scanner nicht am Arbeitsplatz / Drucker Probleme",
         "5-2-08": "Kein Leergut bereitgestellt",
         "5-2-09": "Gasflasche wechseln",
-        "Sonstige": "Sonstige (Hata detayı giriniz)"
+        "Sonstige": "Sonstige (Bitte Grund angeben)"
     };
 
     const workerOptions = `
@@ -194,11 +194,8 @@
     function handleAnlageChange() {
         const anlageSelect = document.getElementById("anlage");
         const ftContainer = document.getElementById("formtraegerContainer");
-        
-        // Formträger göster/gizle
         ftContainer.style.display = anlageSelect.value.startsWith("PUR") ? "block" : "none";
         
-        // Hata kutularını temizle ve yeni bir tane aç
         document.getElementById("stoerungContainer").innerHTML = "";
         if (anlageSelect.value !== "") {
             addStoerungField();
@@ -225,14 +222,14 @@
             div.innerHTML = `<div class="grid-2">
                 <div>
                     <select class="stoerung-grund-select" onchange="checkSonstigeError(this)">${opts}</select>
-                    <input type="text" class="stoerung-sonstige-input" placeholder="Sonstige Beschreibung">
+                    <input type="text" class="stoerung-sonstige-input" placeholder="Beschreibung eingeben">
                 </div>
-                <div><input type="number" class="stoerung-dauer" placeholder="Min" inputmode="numeric"></div>
+                <div><input type="number" class="stoerung-dauer" placeholder="Dauer (Min)" inputmode="numeric"></div>
             </div>`;
         } else {
             div.innerHTML = `<div class="grid-2">
-                <div><input type="text" class="stoerung-grund-manual" placeholder="Hata nedeni (IM/CIM)"></div>
-                <div><input type="number" class="stoerung-dauer" placeholder="Min" inputmode="numeric"></div>
+                <div><input type="text" class="stoerung-grund-manual" placeholder="Grund der Störung"></div>
+                <div><input type="number" class="stoerung-dauer" placeholder="Dauer (Min)" inputmode="numeric"></div>
             </div>`;
         }
         container.appendChild(div);
@@ -254,7 +251,7 @@
         const div = document.createElement("div");
         div.className = "worker-item";
         div.innerHTML = `<select class="worker-select" onchange="checkOtherWorker(this)">${workerOptions}</select>
-                        <input type="text" class="other-name-input" placeholder="Name eingeben">`;
+                        <input type="text" class="other-name-input" placeholder="Name manuell eingeben">`;
         document.getElementById("workerContainer").appendChild(div);
     }
 
@@ -263,8 +260,8 @@
         div.className = "artikel-item";
         div.innerHTML = `<label>Artikelnummer</label><input type="text" class="artikel-no" placeholder="z.B. 1023456">
             <div class="grid-2">
-                <div><label>Gut</label><input type="number" class="gut-sayisi" placeholder="0" inputmode="numeric"></div>
-                <div><label>Aus</label><input type="number" class="aus-sayisi" placeholder="0" inputmode="numeric"></div>
+                <div><label>Gut-Teile</label><input type="number" class="gut-sayisi" placeholder="0" inputmode="numeric"></div>
+                <div><label>Ausschuss</label><input type="number" class="aus-sayisi" placeholder="0" inputmode="numeric"></div>
             </div>`;
         document.getElementById("artikelContainer").appendChild(div);
     }
@@ -305,16 +302,16 @@
                 if (sel.value === "Sonstige") {
                     grund = node.querySelector(".stoerung-sonstige-input").value || "Sonstige";
                 } else {
-                    grund = sel.value; // SADECE KOD (ÖRN: 4-2-01)
+                    grund = sel.value; 
                 }
             } else {
                 grund = node.querySelector(".stoerung-grund-manual").value;
             }
-            if(grund) stoerungText += `⚠️ *Hata ${i+1}:* ${grund} (${String(dauer)} Min)\n`;
+            if(grund) stoerungText += `⚠️ *Fehler ${i+1}:* ${grund} (${String(dauer)} Min)\n`;
         });
 
         const text = `📊 *APG BERICHT - SCHICHT B*\n` +
-                     `📅 *Zeit:* ${new Date().toLocaleString('de-DE')}\n` +
+                     `📅 *Datum/Zeit:* ${new Date().toLocaleString('de-DE')}\n` +
                      `👤 *Personal:* ${workers.join(", ")}\n` +
                      `🏗️ *Anlage:* ${anlage}${finalFT ? ' (FT: ' + finalFT + ')' : ''}\n` +
                      `--------------------------\n` +
