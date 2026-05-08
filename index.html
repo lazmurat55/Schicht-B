@@ -26,7 +26,7 @@
         label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #334155; }
         select, input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid var(--border); border-radius: 12px; font-size: 16px; box-sizing: border-box; background: #fbfcfd; font-family: inherit; }
         
-        .worker-item, .stoerung-item { border-left: 4px solid var(--apg-mavi); padding-left: 10px; margin-bottom: 10px; background: #f8fafc; border-radius: 0 12px 12px 0; padding-top: 5px; }
+        .worker-item, .stoerung-item, .ausschuss-detail-item { border-left: 4px solid var(--apg-mavi); padding-left: 10px; margin-bottom: 10px; background: #f8fafc; border-radius: 0 12px 12px 0; padding-top: 5px; }
         .other-name-input, .stoerung-sonstige-input { display: none; margin-top: -5px; border-style: dashed; }
 
         #formtraegerContainer { display: none; background: #f0f4f8; padding: 10px; border-radius: 12px; margin-bottom: 10px; border: 1px dashed var(--apg-mavi); }
@@ -34,6 +34,7 @@
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
         .btn-secondary { background: #e2e8f0; color: #475569; border: none; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 15px; font-size: 13px; }
+        .btn-small { background: #cbd5e1; color: #1e293b; border: none; padding: 8px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; margin-bottom: 10px; width: 100%; }
         .btn-add-art { background: var(--apg-dark); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 20px; font-size: 14px; }
         .btn-wa { background-color: var(--wa-green); color: white; border: none; padding: 18px; border-radius: 14px; font-size: 16px; font-weight: 800; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; }
         .btn-camera { background-color: white; color: var(--apg-dark); border: 2px solid var(--apg-dark); padding: 12px; border-radius: 12px; font-weight: 700; margin-bottom: 10px; width: 100%; cursor: pointer; }
@@ -54,35 +55,23 @@
         <div class="worker-item">
             <select class="worker-select" onchange="checkOtherWorker(this)">
                 <option value="">-- Name wählen --</option>
-                <option>Aldirmaz P.- 577</option>
-                <option>Anderwald R. - 509 E</option>
-                <option>Bayrakli F. - 1377 E</option>
-                <option>Kilic D. - 1384 E</option>
-                <option>Maafi T.- 1273 E</option>
-                <option>Besche T.- 1472</option>
-                <option>Eickhoff P.-1406</option>
-                <option>Toth, Renata-1699</option>
-                <option>Gibba N.- 1367</option>
-                <option>Helf A.- 1483</option>
-                <option>Isbir J.-1715</option>
-                <option>Jeyakumar S.-1698</option>
-                <option>Kalisch T.- 1451</option>
-                <option>Keskin Mur. 517</option>
-                <option>Kowarsch R.-484</option>
-                <option>Nowak M.-1390</option>
-                <option>Pähler D.-1332</option>
-                <option>Patarcsity V.-1700</option>
-                <option>Pulendran K.- 1498</option>
-                <option>Sahin E.-1721</option>
-                <option>Savas S.- 1360</option>
-                <option>Schiavitelli C.-1669</option>
-                <option>Uluyüz B.- 1450</option>
-                <option>Uzun S.-1433</option>
+                <option>Aldirmaz P.- 577</option><option>Anderwald R. - 509 E</option>
+                <option>Bayrakli F. - 1377 E</option><option>Kilic D. - 1384 E</option>
+                <option>Maafi T.- 1273 E</option><option>Besche T.- 1472</option>
+                <option>Eickhoff P.-1406</option><option>Toth, Renata-1699</option>
+                <option>Gibba N.- 1367</option><option>Helf A.- 1483</option>
+                <option>Isbir J.-1715</option><option>Jeyakumar S.-1698</option>
+                <option>Kalisch T.- 1451</option><option>Keskin Mur. 517</option>
+                <option>Kowarsch R.-484</option><option>Nowak M.-1390</option>
+                <option>Pähler D.-1332</option><option>Patarcsity V.-1700</option>
+                <option>Pulendran K.- 1498</option><option>Sahin E.-1721</option>
+                <option>Savas S.- 1360</option><option>Schiavitelli C.-1669</option>
+                <option>Uluyüz B.- 1450</option><option>Uzun S.-1433</option>
                 <option>Klomrit, Thanin - 1070</option>
                 <option>Garcia-Hervas, Francisco - 339</option>
                 <option value="Sonstige">Sonstige (Name eingeben)</option>
             </select>
-            <input type="text" class="other-name-input" placeholder="Vorname Nachname eingeben">
+            <input type="text" class="other-name-input" placeholder="Vorname Nachname">
         </div>
     </div>
     <button class="btn-secondary" onclick="addWorkerField()">👤 Mitarbeiter hinzufügen</button>
@@ -103,15 +92,12 @@
     </select>
 
     <div id="formtraegerContainer">
-        <label>Formträger (Erforderlich)</label>
+        <label>Formträger</label>
         <select id="formtraegerSelect" onchange="checkMultipleFT(this)">
             <option value="">-- Formträger wählen --</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option>
+            <option value="5">5</option><option value="6">6</option>
             <option value="Mehrere">Mehrere Formträger</option>
         </select>
         <input type="text" id="multipleFTInput" style="display:none; border-style: dashed;" placeholder="z.B. 1, 3, 5">
@@ -119,27 +105,16 @@
 
     <!-- PRODUKTION -->
     <div class="section-title">Produktionsdaten</div>
-    <div id="artikelContainer">
-        <div class="artikel-item">
-            <label>Artikelnummer</label>
-            <input type="text" class="artikel-no" placeholder="z.B. 1023456">
-            <div class="grid-2">
-                <div><label>Gut-Teile</label><input type="number" class="gut-sayisi" placeholder="0" inputmode="numeric"></div>
-                <div><label>Ausschuss</label><input type="number" class="aus-sayisi" placeholder="0" inputmode="numeric"></div>
-            </div>
-        </div>
-    </div>
+    <div id="artikelContainer"></div>
     <button class="btn-add-art" onclick="addArtikelField()">📦 Artikel hinzufügen</button>
 
     <!-- STÖRUNGEN -->
     <div class="section-title">Störungen</div>
-    <div id="stoerungContainer">
-        <!-- JS-Inhalt -->
-    </div>
+    <div id="stoerungContainer"></div>
     <button class="btn-secondary" onclick="addStoerungField()">⚠️ Störung hinzufügen</button>
     
     <label>Notizen</label>
-    <textarea id="notiz" rows="2" placeholder="Besonderheiten oder Anmerkungen..."></textarea>
+    <textarea id="notiz" rows="2" placeholder="Besonderheiten..."></textarea>
 
     <div id="imgLabel">📸 Foto aufgenommen</div>
     <input type="file" id="camera" accept="image/*" capture="environment" style="display:none" onchange="updateImgStatus()">
@@ -149,139 +124,141 @@
 </div>
 
 <script>
-    // FEHLERCZODES LISTE (PUR)
-    const purErrors = {
-        "4-2-01": "Ungepl. Instandhaltung an der Werkzeug",
-        "4-2-02": "Ungepl. Instandhaltung an der Maschine",
-        "4-2-03": "POLY /SO Überdrück",
-        "4-2-04": "Mischkopf n.i.o. (undicht etc.)",
-        "4-2-05": "Fehler Lichtschranke",
-        "4-2-06": "Trennmittelpistole verstopft/defekt",
-        "4-2-07": "Formträger öffnet nicht/schließt nicht",
-        "4-2-08": "Reinigung des Werkzeugs",
-        "4-2-09": "Not Aus",
-        "5-2-01": "Keine Halbfertigteile bereitgestellt (Logistik)",
-        "5-2-02": "Keine Halbfertigteile von IM/CIM Anlage",
-        "5-2-03": "Anlernen / angelernt werden von Mitarbeiter",
-        "5-2-04": "Keine Produktion aufgrund von Wartezeit",
-        "5-2-05": "Mitarbeiter Umbesetzung (Anlage steht)",
-        "5-2-06": "Unterbesetzung (Performance Verluste)",
-        "5-2-07": "Scanner nicht am Arbeitsplatz / Drucker Probleme",
-        "5-2-08": "Kein Leergut bereitgestellt",
-        "5-2-09": "Gasflasche wechseln",
-        "Sonstige": "Sonstige (Bitte Grund angeben)"
+    // Ausschuss Codes
+    const ausschussCodes = {
+        "PUR": {
+            "P101": "Anfahrschrott PUR",
+            "P102": "PUR nicht voll",
+            "P103": "Schaum beschädigt",
+            "P104": "Schaumbild n.i.O.",
+            "P105": "Schaumhartung n.i.O.",
+            "P106": "Einlegefehlie"
+        },
+        "CIM": {
+            "C102": "CiM nicht voll",
+            "C103": "CIM beschädigt"
+        }
     };
 
-    const workerOptions = `
-        <option value="">-- Name wählen --</option>
-        <option>Aldirmaz P.- 577</option><option>Anderwald R. - 509 E</option>
-        <option>Bayrakli F. - 1377 E</option><option>Kilic D. - 1384 E</option>
-        <option>Maafi T.- 1273 E</option><option>Besche T.- 1472</option>
-        <option>Eickhoff P.-1406</option><option>Toth, Renata-1699</option>
-        <option>Gibba N.- 1367</option><option>Helf A.- 1483</option>
-        <option>Isbir J.-1715</option><option>Jeyakumar S.-1698</option>
-        <option>Kalisch T.- 1451</option><option>Keskin Mur. 517</option>
-        <option>Kowarsch R.-484</option><option>Nowak M.-1390</option>
-        <option>Pähler D.-1332</option><option>Patarcsity V.-1700</option>
-        <option>Pulendran K.- 1498</option><option>Sahin E.-1721</option>
-        <option>Savas S.- 1360</option><option>Schiavitelli C.-1669</option>
-        <option>Uluyüz B.- 1450</option><option>Uzun S.-1433</option>
-        <option>Klomrit, Thanin - 1070</option>
-        <option>Garcia-Hervas, Francisco - 339</option>
-        <option value="Sonstige">Sonstige (Name eingeben)</option>
-    `;
+    // Störung Codes
+    const purErrors = {
+        "4-2-01": "Ungepl. Instandhaltung Werkzeug",
+        "4-2-02": "Ungepl. Instandhaltung Maschine",
+        "4-2-03": "POLY /SO Überdrück",
+        "4-2-04": "Mischkopf n.i.o.",
+        "4-2-05": "Fehler Lichtschranke",
+        "4-2-06": "Trennmittelpistole verstopft",
+        "4-2-07": "Formträger öffnet/schließt nicht",
+        "4-2-08": "Reinigung Werkzeug",
+        "4-2-09": "Not Aus",
+        "Sonstige": "Sonstige"
+    };
 
     function handleAnlageChange() {
-        const anlageSelect = document.getElementById("anlage");
-        const ftContainer = document.getElementById("formtraegerContainer");
-        ftContainer.style.display = anlageSelect.value.startsWith("PUR") ? "block" : "none";
-        
+        const anlage = document.getElementById("anlage").value;
+        document.getElementById("formtraegerContainer").style.display = anlage.startsWith("PUR") ? "block" : "none";
         document.getElementById("stoerungContainer").innerHTML = "";
-        if (anlageSelect.value !== "") {
+        document.getElementById("artikelContainer").innerHTML = "";
+        if (anlage !== "") {
+            addArtikelField();
             addStoerungField();
         }
+    }
+
+    function addArtikelField() {
+        const container = document.getElementById("artikelContainer");
+        const div = document.createElement("div");
+        div.className = "artikel-item";
+        div.innerHTML = `
+            <label>Artikelnummer</label>
+            <input type="text" class="artikel-no" placeholder="z.B. 1023456">
+            <div class="grid-2">
+                <div><label>Gut-Teile</label><input type="number" class="gut-sayisi" value="0" inputmode="numeric"></div>
+                <div><label>Ausschuss</label><input type="number" class="aus-sayisi" value="0" inputmode="numeric"></div>
+            </div>
+            <div class="ausschuss-reasons-container">
+                <label style="font-size:11px; color:var(--apg-mavi)">Ausschussgründe & Mengen:</label>
+                <div class="ausschuss-list"></div>
+                <button class="btn-small" onclick="addAusschussReason(this)">+ Grund hinzufügen</button>
+            </div>
+        `;
+        container.appendChild(div);
+        addAusschussReason(div.querySelector(".btn-small"));
+    }
+
+    function addAusschussReason(btn) {
+        const anlage = document.getElementById("anlage").value;
+        const list = btn.previousElementSibling;
+        const div = document.createElement("div");
+        div.className = "ausschuss-detail-item";
+        
+        let type = anlage.startsWith("PUR") ? "PUR" : (anlage.startsWith("CIM") ? "CIM" : "MANUAL");
+        
+        if (type === "MANUAL") {
+            div.innerHTML = `<div class="grid-2">
+                <input type="text" class="aus-reason-manual" placeholder="Grund">
+                <input type="number" class="aus-reason-qty" placeholder="Menge" inputmode="numeric">
+            </div>`;
+        } else {
+            let opts = '<option value="">-- Code --</option>';
+            const codes = ausschussCodes[type];
+            for (let code in codes) opts += `<option value="${code}">${code} - ${codes[code]}</option>`;
+            div.innerHTML = `<div class="grid-2">
+                <select class="aus-reason-select">${opts}</select>
+                <input type="number" class="aus-reason-qty" placeholder="Menge" inputmode="numeric">
+            </div>`;
+        }
+        list.appendChild(div);
     }
 
     function addStoerungField() {
         const anlage = document.getElementById("anlage").value;
         const container = document.getElementById("stoerungContainer");
-        
-        if (anlage === "") {
-            alert("Bitte zuerst eine Anlage auswählen!");
-            return;
-        }
-
+        if (anlage === "") return;
         const div = document.createElement("div");
         div.className = "stoerung-item";
         
         if (anlage.startsWith("PUR")) {
             let opts = '<option value="">-- Fehler wählen --</option>';
-            for (let code in purErrors) {
-                opts += `<option value="${code}">${code} - ${purErrors[code]}</option>`;
-            }
+            for (let code in purErrors) opts += `<option value="${code}">${code} - ${purErrors[code]}</option>`;
             div.innerHTML = `<div class="grid-2">
-                <div>
-                    <select class="stoerung-grund-select" onchange="checkSonstigeError(this)">${opts}</select>
-                    <input type="text" class="stoerung-sonstige-input" placeholder="Beschreibung eingeben">
-                </div>
-                <div><input type="number" class="stoerung-dauer" placeholder="Dauer (Min)" inputmode="numeric"></div>
+                <div><select class="stoerung-grund-select" onchange="checkSonstigeError(this)">${opts}</select>
+                <input type="text" class="stoerung-sonstige-input" placeholder="Beschreibung"></div>
+                <div><input type="number" class="stoerung-dauer" placeholder="Min" inputmode="numeric"></div>
             </div>`;
         } else {
             div.innerHTML = `<div class="grid-2">
-                <div><input type="text" class="stoerung-grund-manual" placeholder="Grund der Störung"></div>
-                <div><input type="number" class="stoerung-dauer" placeholder="Dauer (Min)" inputmode="numeric"></div>
+                <div><input type="text" class="stoerung-grund-manual" placeholder="Grund"></div>
+                <div><input type="number" class="stoerung-dauer" placeholder="Min" inputmode="numeric"></div>
             </div>`;
         }
         container.appendChild(div);
     }
 
-    function checkSonstigeError(select) {
-        select.nextElementSibling.style.display = (select.value === "Sonstige") ? "block" : "none";
-    }
-
-    function checkOtherWorker(select) {
-        select.nextElementSibling.style.display = (select.value === "Sonstige") ? "block" : "none";
-    }
-
-    function checkMultipleFT(select) {
-        document.getElementById("multipleFTInput").style.display = (select.value === "Mehrere") ? "block" : "none";
-    }
-
+    function checkSonstigeError(select) { select.nextElementSibling.style.display = (select.value === "Sonstige") ? "block" : "none"; }
+    function checkOtherWorker(select) { select.nextElementSibling.style.display = (select.value === "Sonstige") ? "block" : "none"; }
+    function checkMultipleFT(select) { document.getElementById("multipleFTInput").style.display = (select.value === "Mehrere") ? "block" : "none"; }
+    
     function addWorkerField() {
+        const container = document.getElementById("workerContainer");
         const div = document.createElement("div");
         div.className = "worker-item";
-        div.innerHTML = `<select class="worker-select" onchange="checkOtherWorker(this)">${workerOptions}</select>
-                        <input type="text" class="other-name-input" placeholder="Name manuell eingeben">`;
-        document.getElementById("workerContainer").appendChild(div);
+        div.innerHTML = `<select class="worker-select" onchange="checkOtherWorker(this)">${document.querySelector(".worker-select").innerHTML}</select>
+                        <input type="text" class="other-name-input" placeholder="Name manuell">`;
+        container.appendChild(div);
     }
 
-    function addArtikelField() {
-        const div = document.createElement("div");
-        div.className = "artikel-item";
-        div.innerHTML = `<label>Artikelnummer</label><input type="text" class="artikel-no" placeholder="z.B. 1023456">
-            <div class="grid-2">
-                <div><label>Gut-Teile</label><input type="number" class="gut-sayisi" placeholder="0" inputmode="numeric"></div>
-                <div><label>Ausschuss</label><input type="number" class="aus-sayisi" placeholder="0" inputmode="numeric"></div>
-            </div>`;
-        document.getElementById("artikelContainer").appendChild(div);
-    }
-
-    function updateImgStatus() {
-        if(document.getElementById("camera").files.length > 0) document.getElementById("imgLabel").style.display = "block";
-    }
+    function updateImgStatus() { if(document.getElementById("camera").files.length > 0) document.getElementById("imgLabel").style.display = "block"; }
 
     function generateReport() {
-        const phone = "4917623638794";
         const anlage = document.getElementById("anlage").value;
-        const ftSelect = document.getElementById("formtraegerSelect").value;
-        const ftInput = document.getElementById("multipleFTInput").value;
-        let finalFT = (ftSelect === "Mehrere") ? ftInput : ftSelect;
-
+        if(!anlage) { alert("Anlage wählen!"); return; }
+        
         let workers = [];
         document.querySelectorAll(".worker-item").forEach(item => {
             const s = item.querySelector(".worker-select");
             const o = item.querySelector(".other-name-input");
-            if (s.value === "Sonstige" && o.value) workers.push(o.value + " (S)");
+            if (s.value === "Sonstige" && o.value) workers.push(o.value);
             else if (s.value && s.value !== "Sonstige") workers.push(s.value);
         });
 
@@ -289,8 +266,21 @@
         document.querySelectorAll(".artikel-item").forEach((node, i) => {
             const no = node.querySelector(".artikel-no").value || "---";
             const gut = node.querySelector(".gut-sayisi").value || "0";
-            const aus = node.querySelector(".aus-sayisi").value || "0";
-            artikelText += `📦 *Art ${i+1}:* ${no} | ✅ Gut: ${gut} | 🗑️ Aus: ${aus}\n`;
+            const ausTotal = node.querySelector(".aus-sayisi").value || "0";
+            
+            let reasons = [];
+            node.querySelectorAll(".ausschuss-detail-item").forEach(r => {
+                const qty = r.querySelector(".aus-reason-qty").value;
+                let rText = "";
+                const sel = r.querySelector(".aus-reason-select");
+                if (sel) rText = sel.value;
+                else rText = r.querySelector(".aus-reason-manual").value;
+                
+                if(rText && qty) reasons.push(`${rText}(${qty}stk)`);
+            });
+
+            artikelText += `📦 *Art ${i+1}:* ${no}\n   ✅ Gut: ${gut} | 🗑️ Aus: ${ausTotal}\n`;
+            if(reasons.length > 0) artikelText += `   ⚠️ Gründe: ${reasons.join(", ")}\n`;
         });
 
         let stoerungText = "";
@@ -299,28 +289,24 @@
             const dauer = node.querySelector(".stoerung-dauer").value || "0";
             if (anlage.startsWith("PUR")) {
                 const sel = node.querySelector(".stoerung-grund-select");
-                if (sel.value === "Sonstige") {
-                    grund = node.querySelector(".stoerung-sonstige-input").value || "Sonstige";
-                } else {
-                    grund = sel.value; 
-                }
+                grund = (sel.value === "Sonstige") ? node.querySelector(".stoerung-sonstige-input").value : sel.value;
             } else {
                 grund = node.querySelector(".stoerung-grund-manual").value;
             }
-            if(grund) stoerungText += `⚠️ *Fehler ${i+1}:* ${grund} (${String(dauer)} Min)\n`;
+            if(grund) stoerungText += `⚠️ *Störung ${i+1}:* ${grund} (${dauer} Min)\n`;
         });
 
         const text = `📊 *APG BERICHT - SCHICHT B*\n` +
-                     `📅 *Datum/Zeit:* ${new Date().toLocaleString('de-DE')}\n` +
+                     `📅 *Zeit:* ${new Date().toLocaleString('de-DE')}\n` +
                      `👤 *Personal:* ${workers.join(", ")}\n` +
-                     `🏗️ *Anlage:* ${anlage}${finalFT ? ' (FT: ' + finalFT + ')' : ''}\n` +
+                     `🏗️ *Anlage:* ${anlage}\n` +
                      `--------------------------\n` +
                      artikelText +
                      `--------------------------\n` +
                      (stoerungText || "⚠️ *Störungen:* Keine\n") +
                      `📝 *Notiz:* ${document.getElementById("notiz").value || "Keine"}`;
 
-        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+        window.open(`https://wa.me/4917623638794?text=${encodeURIComponent(text)}`, '_blank');
     }
 </script>
 
