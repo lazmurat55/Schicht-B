@@ -26,7 +26,7 @@
         label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #334155; }
         select, input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid var(--border); border-radius: 12px; font-size: 16px; box-sizing: border-box; background: #fbfcfd; font-family: inherit; }
         
-        #formtraegerContainer { display: none; transition: 0.3s; background: #f0f4f8; padding: 10px; border-radius: 12px; margin-bottom: 10px; }
+        #formtraegerContainer { display: none; background: #f0f4f8; padding: 10px; border-radius: 12px; margin-bottom: 10px; border: 1px dashed var(--apg-mavi); }
         
         .worker-item { border-left: 4px solid var(--apg-mavi); padding-left: 10px; margin-bottom: 10px; }
         .artikel-item { background: #f1f5f9; padding: 15px; border-radius: 16px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
@@ -47,7 +47,6 @@
         <span class="schicht-tag">Schicht-B Report</span>
     </div>
 
-    <!-- PERSONAL -->
     <div class="section-title">Personal</div>
     <div id="workerContainer">
         <div class="worker-item">
@@ -61,29 +60,32 @@
             </select>
         </div>
     </div>
-    <button class="btn-secondary" onclick="addWorkerField()">👤 Weiteren Mitarbeiter hinzufügen</button>
+    <button class="btn-secondary" onclick="addWorkerField()">👤 Mitarbeiter hinzufügen</button>
 
-    <!-- ANLAGE & FORMTRAEGER -->
     <div class="section-title">Anlage & Formträger</div>
     <select id="anlage" onchange="toggleFormtraeger()">
         <option value="">-- Anlage wählen --</option>
-        <option>PUR1</option><option>PUR2</option><option>PUR3</option>
-        <option>PUR4</option><option>PUR5</option><option>PUR6</option>
-        <option>PUR7</option><option>PUR8</option><option>PUR9</option>
-        <option>CIM1</option><option>IM1</option><option>IM2</option>
+        <option value="PUR1">PUR1</option><option value="PUR2">PUR2</option>
+        <option value="PUR3">PUR3</option><option value="PUR4">PUR4</option>
+        <option value="PUR5">PUR5</option><option value="PUR6">PUR6</option>
+        <option value="PUR7">PUR7</option><option value="PUR8">PUR8</option>
+        <option value="PUR9">PUR9</option>
+        <option value="CIM1">CIM1</option>
+        <option value="IM1">IM1</option><option value="IM2">IM2</option>
+        <option value="IM3">IM3</option><option value="IM4">IM4</option>
+        <option value="IM5">IM5</option>
         <option value="Sonstige">Sonstige</option>
     </select>
 
     <div id="formtraegerContainer">
-        <label>Formträger wählen (1-6)</label>
+        <label>Formträger (Zorunlu)</label>
         <select id="formtraeger">
-            <option value="">-- Formträger wählen --</option>
+            <option value="">-- Formträger wählen (1-6) --</option>
             <option>1</option><option>2</option><option>3</option>
             <option>4</option><option>5</option><option>6</option>
         </select>
     </div>
 
-    <!-- PRODUKTION -->
     <div class="section-title">Produktionsdaten</div>
     <div id="artikelContainer">
         <div class="artikel-item">
@@ -101,43 +103,36 @@
             </div>
         </div>
     </div>
-    <button class="btn-add-art" onclick="addArtikelField()">📦 Weiteren Artikel hinzufügen</button>
+    <button class="btn-add-art" onclick="addArtikelField()">📦 Artikel hinzufügen</button>
 
-    <!-- STÖRUNGEN -->
     <div class="section-title">Störungen & Info</div>
     <div class="grid-2">
-        <div>
-            <label>Grund</label>
-            <input type="text" id="stoerung" placeholder="Störungsgrund">
-        </div>
-        <div>
-            <label>Dauer (Min)</label>
-            <input type="number" id="dauer" placeholder="0" inputmode="numeric">
-        </div>
+        <div><label>Grund</label><input type="text" id="stoerung" placeholder="Grund"></div>
+        <div><label>Dauer (Min)</label><input type="number" id="dauer" placeholder="0" inputmode="numeric"></div>
     </div>
     
-    <label>Zusätzliche Notizen</label>
-    <textarea id="notiz" rows="2" placeholder="Besonderheiten der Schicht..."></textarea>
+    <label>Notizen</label>
+    <textarea id="notiz" rows="2" placeholder="Besonderheiten..."></textarea>
 
-    <div id="imgLabel">📸 Foto erfolgreich aufgenommen</div>
+    <div id="imgLabel">📸 Foto aufgenommen</div>
     <input type="file" id="camera" accept="image/*" capture="environment" style="display:none" onchange="updateImgStatus()">
     <button class="btn-camera" onclick="document.getElementById('camera').click()">📸 FOTO AUFNEHMEN</button>
 
-    <button class="btn-wa" onclick="generateReport()">
-        BERICHT PER WHATSAPP SENDEN
-    </button>
+    <button class="btn-wa" onclick="generateReport()">BERICHT SENDEN</button>
 </div>
 
 <script>
     function toggleFormtraeger() {
         const anlage = document.getElementById("anlage").value;
         const container = document.getElementById("formtraegerContainer");
-        // Eğer Anlage seçiliyse ve "Sonstige" değilse göster
-        if (anlage !== "" && anlage !== "Sonstige") {
+        // Sadece PUR1'den PUR9'a kadar olanlarda göster
+        const isPur = anlage.startsWith("PUR");
+        
+        if (isPur) {
             container.style.display = "block";
         } else {
             container.style.display = "none";
-            document.getElementById("formtraeger").value = ""; // Seçimi sıfırla
+            document.getElementById("formtraeger").value = "";
         }
     }
 
@@ -157,14 +152,8 @@
             <label>Artikelnummer</label>
             <input type="text" class="artikel-no" placeholder="z.B. 1023456">
             <div class="grid-2">
-                <div>
-                    <label>Gut-Teile</label>
-                    <input type="number" class="gut-sayisi" placeholder="0" inputmode="numeric">
-                </div>
-                <div>
-                    <label>Ausschuss</label>
-                    <input type="number" class="aus-sayisi" placeholder="0" inputmode="numeric">
-                </div>
+                <div><label>Gut-Teile</label><input type="number" class="gut-sayisi" placeholder="0" inputmode="numeric"></div>
+                <div><label>Ausschuss</label><input type="number" class="aus-sayisi" placeholder="0" inputmode="numeric"></div>
             </div>`;
         container.appendChild(div);
     }
@@ -180,6 +169,12 @@
         const anlage = document.getElementById("anlage").value;
         const formtraeger = document.getElementById("formtraeger").value;
         
+        // Formträger Kontrolü (PUR makineleri için zorunlu)
+        if (anlage.startsWith("PUR") && !formtraeger) {
+            alert("❌ Bitte Formträger für " + anlage + " auswählen!");
+            return;
+        }
+
         let workers = [];
         document.querySelectorAll(".worker-select").forEach(s => { if(s.value) workers.push(s.value); });
         
@@ -204,19 +199,16 @@
         const now = new Date();
         const time = now.toLocaleDateString('de-DE') + " " + now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
 
-        // Formträger bilgisini sadece seçiliyse ekle
-        const formInfo = (formtraeger) ? ` (Formträger: ${formtraeger})` : "";
-
         const text = `📊 *APG BERICHT - SCHICHT B*\n` +
-                     `📅 *Datum/Zeit:* ${time}\n` +
-                     `👤 *Mitarbeiter:* ${workers.join(", ")}\n` +
-                     `🏗️ *Anlage:* ${anlage}${formInfo}\n` +
+                     `📅 *Zeit:* ${time}\n` +
+                     `👤 *Personal:* ${workers.join(", ")}\n` +
+                     `🏗️ *Anlage:* ${anlage}${formtraeger ? ' (FT: ' + formtraeger + ')' : ''}\n` +
                      `--------------------------\n` +
                      artikelText +
                      `--------------------------\n` +
                      `⚠️ *Störung:* ${stoer} (${dauer} min)\n` +
                      `📝 *Notiz:* ${notiz}\n` +
-                     `📸 *Foto beigefügt:* ${hasImg}`;
+                     `📸 *Foto:* ${hasImg}`;
 
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
     }
